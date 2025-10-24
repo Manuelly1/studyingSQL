@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+venv/
+venv.bak/
+.envrc
+*.egg-info/
+*.egg
+*.log
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# SQLite
+*.db
+*.sqlite3
+
+# VSCode
+.vscode/
+
+# Mac
+.DS_Store
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.swp
