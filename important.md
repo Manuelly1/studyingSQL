@@ -12,15 +12,15 @@
 
 ## Comandos e Funções
 
-- **SELECT:** É o comando que irá resgatar/selecionar as colunas de uma tabela;
+- **`SELECT`:** É o comando que irá resgatar/selecionar as colunas de uma tabela;
 
 ---
 
-- **FROM:** É o comando que irá indicar a tabela que os dados estão sendo resgatados;
+- **`FROM`:** É o comando que irá indicar a tabela que os dados estão sendo resgatados;
 
 ---
 
-- **WHERE:** É a cláusula que irá filtrar os dados com base em uma condição. Ex: deseja-se selecionar apenas a categoria RPG, portanto, aplica-se: 
+- **`WHERE`:** É a cláusula que irá filtrar os dados com base em uma condição. Ex: deseja-se selecionar apenas a categoria RPG, portanto, aplica-se: 
 
     ```sql
 
@@ -30,7 +30,7 @@
 
 ---
 
-- **ORDER BY:** É um comando usado para ordenar os dados de acordo com a ordenação especificada, podendo ser ASC (forma crescente) ou DESC (forma decrescente);
+- **`ORDER BY`:** É um comando usado para ordenar os dados de acordo com a ordenação especificada, podendo ser ASC (forma crescente) ou DESC (forma decrescente);
 
     ```sql
 
@@ -41,7 +41,7 @@
 
 ---
 
--  **GROUP BY:** É um comando usado para "espremer"/agrupar os resultados de uma consulta de acordo com uma ou mais colunas. Assim, você pode aplicar funções de agregação (como COUNT, SUM, AVG, MAX, MIN) a cada grupo de registros. Em outras palavras, ele **agrupa os dados a partir de uma categoria ou campo em comum**;
+-  **`GROUP BY`:** É um comando usado para "espremer"/agrupar os resultados de uma consulta de acordo com uma ou mais colunas. Assim, você pode aplicar funções de agregação (como COUNT, SUM, AVG, MAX, MIN) a cada grupo de registros. Em outras palavras, ele **agrupa os dados a partir de uma categoria ou campo em comum**;
 
     ```sql
 
@@ -65,7 +65,7 @@
 
 ---
 
--  **HAVING:** É um comando conhecido como WHERE do GROUP BY. Ele filtra os grupos criados, ou seja, não aplica um filtro sobre as linhas individuais, como o WHERE, mas sim nos grupos que foram formados na agregação;
+-  **`HAVING`:** É um comando conhecido como WHERE do GROUP BY. Ele filtra os grupos criados, ou seja, não aplica um filtro sobre as linhas individuais, como o WHERE, mas sim nos grupos que foram formados na agregação;
 
     ```sql
 
@@ -80,7 +80,7 @@
 
 ---
 
-- **LEFT JOIN:** Digamos que você tem 2 tabelas: VENDAS (esquerda) e CLIENTES, ao aplicar:
+- **`LEFT JOIN`:** Digamos que você tem 2 tabelas: VENDAS (esquerda) e CLIENTES (direita), ao aplicar:
 
     ```sql
 
@@ -88,17 +88,17 @@
     FROM VENDAS 
     LEFT JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
-- Nesse exemplo, IdCliente é a chave primária da tabela CLIENTES, e `VENDAS.IdCliente` é a chave estrangeira que referencia essa chave primária. Ao usar o LEFT JOIN, a tabela da esquerda é aquela que aparece no FROM, neste caso, VENDAS;
+- Nesse exemplo, `IdCliente` é a chave primária da tabela CLIENTES, e `VENDAS.IdCliente` é a chave estrangeira que referencia essa chave primária. Ao usar o LEFT JOIN, **a tabela da esquerda é aquela que aparece no FROM**, neste caso, VENDAS;
 
 - O SQL vai manter todos os registros da tabela da esquerda (VENDAS) e tentar combinar com os registros da tabela da direita (CLIENTES) com base na condição `ON VENDAS.IdCliente = CLIENTES.IdCliente`;
 
 - Se existir um correspondente na tabela da direita, os dados serão incluídos. Caso contrário, os campos da tabela da direita aparecerão como `NULL`;
 
-- Assim, o LEFT JOIN garante que todos os registros da tabela da esquerda sejam mantidos, e só “traz” os dados da tabela da direita quando houver correspondência. Registros sem correspondência recebem NULL nas colunas da direita.
+- Assim, o LEFT JOIN garante que todos os registros da tabela da esquerda sejam mantidos, e só “traz” os dados da tabela da direita quando houver correspondência.
 
 ---
 
-- **INNER JOIN:** Digamos que você tem as mesmas 2 tabelas: VENDAS (esquerda) e CLIENTES, ao aplicar:
+- **`INNER JOIN`:** Digamos que você tem as mesmas 2 tabelas: VENDAS (esquerda) e CLIENTES (direita), ao aplicar:
 
     ```sql
 
@@ -106,17 +106,17 @@
     FROM VENDAS 
     INNER JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
-- O INNER JOIN retorna apenas os registros que possuem correspondência em ambas as tabelas.
+- O INNER JOIN retorna apenas os registros que possuem correspondência em ambas as tabelas;
 
 - A tabela da esquerda (VENDAS) e a tabela da direita (CLIENTES) são comparadas com base na condição `ON VENDAS.IdCliente = CLIENTES.IdCliente`;
 
 - Se não houver correspondência (por exemplo, se um `IdCliente` existir em VENDAS, mas não em CLIENTES), esse registro não aparecerá no resultado;
 
-- Em outras palavras, o INNER JOIN só mantém os registros onde o "match" é perfeito entre as duas tabelas. Ele retorna apenas os dados que existem em ambas as tabelas, descartando qualquer registro sem correspondência.
+- Em outras palavras, o INNER JOIN só mantém os registros onde o "*match*" é perfeito entre as duas tabelas. Ele retorna apenas os dados que existem em ambas as tabelas, descartando qualquer registro sem correspondência.
 
 ---
 
-- **RIGHT JOIN:** Digamos que você tem 2 tabelas: VENDAS (esquerda) e CLIENTES, ao aplicar:
+- **`RIGHT JOIN`:** Digamos que você tem as mesmas 2 tabelas: VENDAS (esquerda) e CLIENTES (direita), ao aplicar:
 
     ```sql
 
@@ -126,15 +126,15 @@
 
 - O RIGHT JOIN funciona de forma semelhante ao LEFT JOIN, mas a referência passa a ser a tabela da direita (CLIENTES);
 
-- Isso significa que todos os registros da tabela da direita serão mantidos no resultado, mesmo que não existam correspondências na tabela da esquerda (VENDAS);
+- Isso significa que todos os registros da tabela da direita serão mantidos no resultado, mesmo que não exista correspondência na tabela da esquerda (VENDAS);
 
 - Se não houver correspondência para um `IdCliente` da tabela da direita, os campos da tabela da esquerda (VENDAS) aparecerão como `NULL`;
 
-- Logo, o RIGHT JOIN garante que todos os registros da tabela da direita sejam preservados, e só traz dados da tabela da esquerda quando houver correspondência.
+- Logo, o RIGHT JOIN garante que todos os registros da tabela da direita sejam preservados, e só "traz" dados da tabela da esquerda quando houver correspondência.
 
 ---
 
-- **FULL JOIN:** Suponha que você tenha duas tabelas: **VENDAS** (esquerda) e **CLIENTES** (direita).  
+- **`FULL JOIN`:** Suponha que você tenha as mesmas duas tabelas: **VENDAS** (esquerda) e **CLIENTES** (direita).  
 
     ```sql
 
@@ -150,7 +150,7 @@
 
 ---
 
-- **Função `COUNT()`:** Serve para **contar registros** em uma tabela ou em um grupo.  
+- **Função `COUNT()`:** Serve para **contar registros** em uma tabela ou em um grupo; 
 
     - `COUNT(*)` → conta **todas as linhas**, inclusive com valores nulos;
 
@@ -198,7 +198,7 @@
 
 ---
 
-- **Função: `substr():`(ou substring) serve para recortar uma parte de um texto (string):**  
+- **Função: `substr():`** Serve para recortar uma parte de um texto (string);  
 
     Sintaxe: `substr(campo, posição_inicial, quantidade_de_caracteres)`
 
@@ -218,8 +218,7 @@
 
 ---
 
-- **Função `datetime():`**  
-  Converte uma *string* formatada como data e hora em um tipo de dado **datetime** (data/hora reconhecida pelo banco).  
+- **Função `datetime():`** Converte uma *string* formatada como data e hora em um tipo de dado **datetime** (data/hora reconhecida pelo banco).  
 
     - **Uso:**  
     Ao usar `datetime(substr(...))`, o objetivo é converter a *string* limpa em um valor de **data/hora real**.
@@ -275,7 +274,7 @@
 
 ## Comandos de Filtragem (complementares ao WHERE)
 
-- **BETWEEN:** Filtra valores dentro de um intervalo;
+- **`BETWEEN`:** Filtra valores dentro de um intervalo;
 
     ```sql
 
@@ -285,7 +284,7 @@
 
 ---
 
-- **IN/NOT IN:** Compara com uma lista de valores;
+- **`IN/NOT IN`:** Compara com uma lista de valores;
 
     ```sql
 
@@ -295,7 +294,7 @@
 
 ---
 
-- **LIKE:** Busca por padrões (com % e _);
+- **`LIKE`:** Busca por padrões (com % e _);
 
     ```sql
 
@@ -322,7 +321,7 @@
 
 ---
 
-- **DISTINCT:** Remove duplicatas.
+- **`DISTINCT`:** Remove duplicatas.
 
     ```sql
 
@@ -333,7 +332,7 @@
 
 ## Comandos de Modificações de Dados
 
-- **INSERT INTO:** Insere registros;
+- **`INSERT INTO`:** Insere registros;
 
     ```sql
 
@@ -344,7 +343,7 @@
 
 ---
 
-- **UPDATE:** Atualiza valores;
+- **`UPDATE`:** Atualiza valores;
 
     ```sql
 
@@ -356,7 +355,7 @@
 
 ---
 
-- **DELETE:** Apaga registros.
+- **`DELETE`:** Apaga registros.
 
     ```sql
 
@@ -369,7 +368,7 @@
 
 ## Extras
 
-- **CASE WHEN:** Estrutura condicional;
+- **`CASE WHEN`:** Estrutura condicional;
 
     ```sql
 
@@ -388,11 +387,11 @@
 
         - Se o valor da coluna idade for maior ou igual a 18, o resultado será 'Adulto';
 
-        - Caso contrário (ELSE), o resultado será 'Menor'.
+        - Caso contrário (`ELSE`), o resultado será 'Menor'.
 
 ---
 
-- **COALESCE():** Função que substitui valores nulos por outro valor;
+- **`COALESCE()`:** Função que substitui valores nulos por outro valor;
 
     ```sql
 
@@ -406,11 +405,11 @@
     
         - Se email tiver valor, ele é mostrado;
         
-        - Se email for NULL, o texto "sem email cadastrado" será exibido no lugar.
+        - Se email for `NULL`, o texto "sem email cadastrado" será exibido no lugar.
 
 ---
 
-- **LIMIT/TOP:** Restringe o número de linhas retornadas;
+- **`LIMIT/TOP`:** Restringe o número de linhas retornadas;
 
     ```sql
 
@@ -428,15 +427,15 @@
 
     - `FROM transacao_produto AS t1`: define a tabela principal da consulta e dá a ela um apelido (t1) para simplificar a escrita;
 
-    - `LEFT JOIN produtos AS t2 ON t1.IdProduto = t2.IdProduto`: faz uma junção (LEFT JOIN) entre a tabela transacao_produto e produtos, conectando-as pela coluna IdProduto. Assim, cada transação é associada à descrição do produto correspondente;
+    - `LEFT JOIN produtos AS t2 ON t1.IdProduto = t2.IdProduto`: faz uma junção (LEFT JOIN) entre a tabela `transacao_produto` e `produtos`, conectando-as pela coluna `IdProduto`. Assim, cada transação é associada à descrição do produto correspondente;
 
-    - `SELECT t1.*, t2.DescDescricaoProduto`: seleciona todas as colunas de transacao_produto (t1.*) e a coluna DescDescricaoProduto da tabela produtos (t2);
+    - `SELECT t1.*, t2.DescDescricaoProduto`: seleciona todas as colunas de `transacao_produto` (t1.*) e a coluna `DescDescricaoProduto` da tabela produtos (t2);
 
     - `LIMIT 10`: retorna apenas as 10 primeiras linhas desse resultado combinado.
 
 ---
 
-- **CONCAT():** Junta textos.
+- **`CONCAT()`:** Junta textos.
 
     ```sql
 
@@ -449,16 +448,16 @@
 
 ---
 
-- **ALIAS (AS):** Usada para renomear/apelidar colunas ou tabelas;
+- **`ALIAS (AS)`:** Usada para renomear/apelidar colunas ou tabelas;
 
 ---
 
-- **ROUND():** Arredonda valores numéricos;
+- **`ROUND()`:** Arredonda valores numéricos;
 
 ---
 
-- **LENGTH() / CHAR_LENGTH():** Comprimento de texto;
+- **`LENGTH()` / `CHAR_LENGTH()`:** Comprimento de texto;
 
 ---
 
-- **UPPER() / LOWER():** Transforma em maiúsculas/minúsculas.
+- **`UPPER()` / `LOWER()`:** Transforma em maiúsculas/minúsculas.
