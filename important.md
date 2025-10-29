@@ -36,13 +36,9 @@
     ```sql
 
     SELECT IdCliente, sum(QtdePontos)
-
     FROM transacoes
-
     WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01'
-
     GROUP BY IdCliente
-
     ORDER BY sum(QtdePontos) DESC
 
 - No caso acima, foram selecionadas as colunas IdCliente e QtdePontos (esta última somada por meio da função SUM);
@@ -61,15 +57,10 @@
     ```sql
 
     SELECT IdCliente, sum(QtdePontos)
-
     FROM transacoes
-
     WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01'
-
     GROUP BY IdCliente
-
     HAVING sum(QtdePontos) >= 4000
-
     ORDER BY sum(QtdePontos) DESC
 
 - No exemplo acima, depois de agrupar as transações por cliente, o HAVING exibe somente os clientes que acumularam 4000 pontos ou mais no período de julho.
@@ -79,9 +70,7 @@
     ```sql
 
     SELECT * 
-    
     FROM VENDAS 
-    
     LEFT JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
 - Nesse exemplo, IdCliente é a chave primária da tabela CLIENTES, e VENDAS.IdCliente é a chave estrangeira que referencia essa chave primária. Ao usar o LEFT JOIN, a tabela da esquerda é aquela que aparece no FROM, neste caso, VENDAS;
@@ -96,10 +85,8 @@
 
     ```sql
 
-    SELECT * 
-    
+    SELECT *
     FROM VENDAS 
-    
     INNER JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
 - O INNER JOIN retorna apenas os registros que possuem correspondência em ambas as tabelas.
@@ -114,10 +101,8 @@
 
     ```sql
 
-    SELECT * 
-    
+    SELECT *
     FROM VENDAS 
-    
     RIGHT JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
 - O RIGHT JOIN funciona de forma semelhante ao LEFT JOIN, mas a referência passa a ser a tabela da direita (CLIENTES);
@@ -133,9 +118,7 @@
     ```sql
 
     SELECT * 
-
     FROM VENDAS
-
     FULL JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
 - O FULL JOIN combina o comportamento do LEFT JOIN e do RIGHT JOIN;
@@ -191,11 +174,8 @@
     ```sql
     SELECT *, 
             DtCriacao,
-            
             substr(DtCriacao, 1, 19) AS dtSubString,
-            
             datetime(substr(DtCriacao, 1, 19)) AS dtCriacaoNova,
-            
             strftime('%W', datetime(substr(DtCriacao, 1, 19))) AS diaSemana 
     FROM clientes;
 
