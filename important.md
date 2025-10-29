@@ -51,16 +51,17 @@
     GROUP BY IdCliente
     ORDER BY sum(QtdePontos) DESC
 
-- No caso acima, foram selecionadas as colunas IdCliente e QtdePontos (esta última somada por meio da função SUM);
+- No caso acima, foram selecionadas as colunas `IdCliente` e `QtdePontos` (esta última somada por meio da função SUM);
 
-- O filtro no WHERE limita os registros às transações realizadas no mês de julho de 2025;
+- O filtro no `WHERE` limita os registros às transações realizadas no mês de julho de 2025;
 
-- O comando GROUP BY IdCliente foi aplicado para agrupar as transações de cada cliente, permitindo calcular o total de pontos acumulados por cliente;
+- O comando `GROUP BY IdCliente` foi aplicado para agrupar as transações de cada cliente, permitindo calcular o total de pontos acumulados por cliente;
 
     - **Mas qual a razão de ter aplicado esse comando?** A tabela transações provavelmente tem várias linhas por cliente, se você quiser saber quantos pontos cada cliente acumulou no mês, precisa somar os pontos de cada cliente. Mas se você fizer só a aplicação do SUM, o SQL não saberá como agrupar essas somas. Então, você usa o GROUP BY para que o banco entenda da seguinte forma: “Agrupe todas as transações do mesmo cliente (mesmo IdCliente) e, dentro de cada grupo, some os pontos.”;
-    - Resumindo, o GROUP BY foi aplicado porque há várias transações por cliente, e queremos consolidar (somar) os pontos de cada um, em vez de ver linha por linha.
 
-- Por fim, ORDER BY SUM(QtdePontos) DESC ordena os resultados em ordem decrescente, exibindo primeiro os clientes com maior quantidade total de pontos.
+    - Resumindo, o `GROUP BY` foi aplicado porque há várias transações por cliente, e queremos consolidar (somar) os pontos de cada um, em vez de ver linha por linha.
+
+- Por fim, `ORDER BY SUM(QtdePontos) DESC` ordena os resultados em ordem decrescente, exibindo primeiro os clientes com maior quantidade total de pontos.
 
 ---
 
@@ -75,7 +76,7 @@
     HAVING sum(QtdePontos) >= 4000
     ORDER BY sum(QtdePontos) DESC
 
-- No exemplo acima, depois de agrupar as transações por cliente, o HAVING exibe somente os clientes que acumularam 4000 pontos ou mais no período de julho.
+- No exemplo acima, depois de agrupar as transações por cliente, o `HAVING` exibe somente os clientes que acumularam 4000 pontos ou mais no período de julho.
 
 ---
 
@@ -87,11 +88,11 @@
     FROM VENDAS 
     LEFT JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
-- Nesse exemplo, IdCliente é a chave primária da tabela CLIENTES, e VENDAS.IdCliente é a chave estrangeira que referencia essa chave primária. Ao usar o LEFT JOIN, a tabela da esquerda é aquela que aparece no FROM, neste caso, VENDAS;
+- Nesse exemplo, IdCliente é a chave primária da tabela CLIENTES, e `VENDAS.IdCliente` é a chave estrangeira que referencia essa chave primária. Ao usar o LEFT JOIN, a tabela da esquerda é aquela que aparece no FROM, neste caso, VENDAS;
 
-- O SQL vai manter todos os registros da tabela da esquerda (VENDAS) e tentar combinar com os registros da tabela da direita (CLIENTES) com base na condição ON VENDAS.IdCliente = CLIENTES.IdCliente;
+- O SQL vai manter todos os registros da tabela da esquerda (VENDAS) e tentar combinar com os registros da tabela da direita (CLIENTES) com base na condição `ON VENDAS.IdCliente = CLIENTES.IdCliente`;
 
-- Se existir um correspondente na tabela da direita, os dados serão incluídos. Caso contrário, os campos da tabela da direita aparecerão como NULL;
+- Se existir um correspondente na tabela da direita, os dados serão incluídos. Caso contrário, os campos da tabela da direita aparecerão como `NULL`;
 
 - Assim, o LEFT JOIN garante que todos os registros da tabela da esquerda sejam mantidos, e só “traz” os dados da tabela da direita quando houver correspondência. Registros sem correspondência recebem NULL nas colunas da direita.
 
@@ -107,9 +108,9 @@
 
 - O INNER JOIN retorna apenas os registros que possuem correspondência em ambas as tabelas.
 
-- A tabela da esquerda (VENDAS) e a tabela da direita (CLIENTES) são comparadas com base na condição ON VENDAS.IdCliente = CLIENTES.IdCliente;
+- A tabela da esquerda (VENDAS) e a tabela da direita (CLIENTES) são comparadas com base na condição `ON VENDAS.IdCliente = CLIENTES.IdCliente`;
 
-- Se não houver correspondência (por exemplo, se um IdCliente existir em VENDAS, mas não em CLIENTES), esse registro não aparecerá no resultado;
+- Se não houver correspondência (por exemplo, se um `IdCliente` existir em VENDAS, mas não em CLIENTES), esse registro não aparecerá no resultado;
 
 - Em outras palavras, o INNER JOIN só mantém os registros onde o "match" é perfeito entre as duas tabelas. Ele retorna apenas os dados que existem em ambas as tabelas, descartando qualquer registro sem correspondência.
 
@@ -127,7 +128,7 @@
 
 - Isso significa que todos os registros da tabela da direita serão mantidos no resultado, mesmo que não existam correspondências na tabela da esquerda (VENDAS);
 
-- Se não houver correspondência para um IdCliente da tabela da direita, os campos da tabela da esquerda (VENDAS) aparecerão como NULL;
+- Se não houver correspondência para um `IdCliente` da tabela da direita, os campos da tabela da esquerda (VENDAS) aparecerão como `NULL`;
 
 - Logo, o RIGHT JOIN garante que todos os registros da tabela da direita sejam preservados, e só traz dados da tabela da esquerda quando houver correspondência.
 
@@ -145,7 +146,7 @@
 
 - Ele mantém todos os registros de ambas as tabelas, independentemente de haver correspondência;
 
-- Quando não houver correspondência em uma tabela, os campos da outra tabela aparecerão como NULL.
+- Quando não houver correspondência em uma tabela, os campos da outra tabela aparecerão como `NULL`.
 
 ---
 
