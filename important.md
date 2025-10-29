@@ -12,11 +12,11 @@
 
 ## Comandos e Funções
 
-- **`SELECT`:** É o comando que irá resgatar/selecionar as colunas de uma tabela;
+- **`SELECT`:** É o comando que irá resgatar/selecionar as colunas de uma tabela
 
 ---
 
-- **`FROM`:** É o comando que irá indicar a tabela que os dados estão sendo resgatados;
+- **`FROM`:** É o comando que irá indicar a tabela que os dados estão sendo resgatados
 
 ---
 
@@ -30,7 +30,7 @@
 
 ---
 
-- **`ORDER BY`:** É um comando usado para ordenar os dados de acordo com a ordenação especificada, podendo ser ASC (forma crescente) ou DESC (forma decrescente);
+- **`ORDER BY`:** É um comando usado para ordenar os dados de acordo com a ordenação especificada, podendo ser ASC (forma crescente) ou DESC (forma decrescente)
 
     ```sql
 
@@ -41,7 +41,7 @@
 
 ---
 
--  **`GROUP BY`:** É um comando usado para "espremer"/agrupar os resultados de uma consulta de acordo com uma ou mais colunas. Assim, você pode aplicar funções de agregação (como COUNT, SUM, AVG, MAX, MIN) a cada grupo de registros. Em outras palavras, ele **agrupa os dados a partir de uma categoria ou campo em comum**;
+-  **`GROUP BY`:** É um comando usado para "espremer"/agrupar os resultados de uma consulta de acordo com uma ou mais colunas. Assim, você pode aplicar funções de agregação (como COUNT, SUM, AVG, MAX, MIN) a cada grupo de registros. Em outras palavras, ele **agrupa os dados a partir de uma categoria ou campo em comum**
 
     ```sql
 
@@ -134,7 +134,7 @@
 
 ---
 
-- **`FULL JOIN`:** Suponha que você tenha as mesmas duas tabelas: **VENDAS** (esquerda) e **CLIENTES** (direita).  
+- **`FULL JOIN`:** Suponha que você tenha as mesmas duas tabelas: **VENDAS** (esquerda) e **CLIENTES** (direita), ao aplicar:
 
     ```sql
 
@@ -150,19 +150,19 @@
 
 ---
 
-- **Função `COUNT()`:** Serve para **contar registros** em uma tabela ou em um grupo; 
+- **Função `COUNT()`:** Serve para **contar registros** em uma tabela ou em um grupo
 
     - `COUNT(*)` → conta **todas as linhas**, inclusive com valores nulos;
 
     - `COUNT(1)` → também conta todas as linhas; é uma variação equivalente.  
 
-- **`COUNT(DISTINCT coluna)`:** Conta **apenas os valores distintos** de uma coluna, ignorando duplicatas;
+- **`COUNT(DISTINCT coluna)`:** Conta **apenas os valores distintos** de uma coluna, ignorando duplicatas
 
     - Exemplo: se a coluna `IdCliente` tiver valores repetidos, `COUNT(DISTINCT IdCliente)` contará **cada cliente uma única vez**, independentemente de quantas transações ele tenha.
 
 ---
 
-- **Função `SUM()`:** Soma os valores de uma coluna numérica;
+- **Função `SUM()`:** Soma os valores de uma coluna numérica
 
     ```sql
     
@@ -171,7 +171,7 @@
 
 ---
 
-- **Função `AVG()`:** Calcula a média dos valores de uma coluna numérica;
+- **Função `AVG()`:** Calcula a média dos valores de uma coluna numérica
 
     ```sql
     
@@ -180,7 +180,7 @@
 
 ---
 
-- **Função `MAX()`:** Retorna o maior valor de uma coluna;
+- **Função `MAX()`:** Retorna o maior valor de uma coluna
 
     ```sql
     
@@ -189,7 +189,7 @@
 
 ---
 
-- **Função `MIN():`** Retorna o menor valor de uma coluna;
+- **Função `MIN():`** Retorna o menor valor de uma coluna
 
     ```sql
     
@@ -198,7 +198,7 @@
 
 ---
 
-- **Função: `substr():`** Serve para recortar uma parte de um texto (string);  
+- **Função `substr():`** Serve para recortar uma parte de um texto (string)  
 
     Sintaxe: `substr(campo, posição_inicial, quantidade_de_caracteres)`
 
@@ -218,10 +218,9 @@
 
 ---
 
-- **Função `datetime():`** Converte uma *string* formatada como data e hora em um tipo de dado **datetime** (data/hora reconhecida pelo banco).  
+- **Função `datetime():`** Converte uma *string* formatada como data e hora em um tipo de dado **datetime** (data/hora reconhecida pelo banco)
 
-    - **Uso:**  
-    Ao usar `datetime(substr(...))`, o objetivo é converter a *string* limpa em um valor de **data/hora real**.
+    - **Uso:** ao usar `datetime(substr(...))`, o objetivo é converter a *string* limpa em um valor de **data/hora real**.
 
 ---
 
@@ -274,7 +273,7 @@
 
 ## Comandos de Filtragem (complementares ao WHERE)
 
-- **`BETWEEN`:** Filtra valores dentro de um intervalo;
+- **`BETWEEN`:** Filtra valores dentro de um intervalo
 
     ```sql
 
@@ -284,7 +283,7 @@
 
 ---
 
-- **`IN/NOT IN`:** Compara com uma lista de valores;
+- **`IN/NOT IN`:** Compara com uma lista de valores
 
     ```sql
 
@@ -294,7 +293,7 @@
 
 ---
 
-- **`LIKE`:** Busca por padrões (com % e _);
+- **`LIKE`:** Busca por padrões (com % e _)
 
     ```sql
 
@@ -321,7 +320,7 @@
 
 ---
 
-- **`DISTINCT`:** Remove duplicatas.
+- **`DISTINCT`:** Remove duplicatas
 
     ```sql
 
@@ -332,7 +331,7 @@
 
 ## Comandos de Modificações de Dados
 
-- **`INSERT INTO`:** Insere registros;
+- **`INSERT INTO`:** Insere registros
 
     ```sql
 
@@ -343,7 +342,7 @@
 
 ---
 
-- **`UPDATE`:** Atualiza valores;
+- **`UPDATE`:** Atualiza valores
 
     ```sql
 
@@ -355,7 +354,7 @@
 
 ---
 
-- **`DELETE`:** Apaga registros.
+- **`DELETE`:** Apaga registros
 
     ```sql
 
@@ -368,7 +367,7 @@
 
 ## Extras
 
-- **`CASE WHEN`:** Estrutura condicional;
+- **`CASE WHEN`:** Estrutura condicional
 
     ```sql
 
@@ -391,7 +390,7 @@
 
 ---
 
-- **`COALESCE()`:** Função que substitui valores nulos por outro valor;
+- **`COALESCE()`:** Função que substitui valores nulos por outro valor
 
     ```sql
 
@@ -409,7 +408,7 @@
 
 ---
 
-- **`LIMIT/TOP`:** Restringe o número de linhas retornadas;
+- **`LIMIT/TOP`:** Restringe o número de linhas retornadas
 
     ```sql
 
@@ -448,16 +447,16 @@
 
 ---
 
-- **`ALIAS (AS)`:** Usada para renomear/apelidar colunas ou tabelas;
+- **`ALIAS (AS)`:** Usada para renomear/apelidar colunas ou tabelas
 
 ---
 
-- **`ROUND()`:** Arredonda valores numéricos;
+- **`ROUND()`:** Arredonda valores numéricos
 
 ---
 
-- **`LENGTH()` / `CHAR_LENGTH()`:** Comprimento de texto;
+- **`LENGTH()` / `CHAR_LENGTH()`:** Comprimento de texto
 
 ---
 
-- **`UPPER()` / `LOWER()`:** Transforma em maiúsculas/minúsculas.
+- **`UPPER()` / `LOWER()`:** Transforma em maiúsculas/minúsculas
