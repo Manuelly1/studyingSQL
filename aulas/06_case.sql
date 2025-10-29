@@ -25,10 +25,9 @@ SELECT idCliente, QtdePontos,
         WHEN QtdePontos > 1000 THEN 1
         ELSE 0
     END AS flMago
-
 FROM clientes
 
--- se você quiser filtrar todos os magos, por exemplo, base fazer:
+-- se você quiser filtrar todos os magos, por exemplo, basta fazer:
 WHERE flMago = 1
 
 

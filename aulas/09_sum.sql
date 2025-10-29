@@ -1,11 +1,11 @@
--- para retornar o total de pontos das transações de julho
+-- O total de pontos das transações de julho
 
 SELECT sum(QtdePontos),
 
     sum(CASE
         WHEN QtdePontos > 0 THEN QtdePontos
     END) AS qtdePontosPositivos,
-    
+
     sum(CASE
         WHEN QtdePontos < 0 THEN QtdePontos
     END) AS qtdePontosNegativos

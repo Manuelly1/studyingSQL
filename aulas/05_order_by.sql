@@ -1,13 +1,15 @@
--- para descobrir, por exemplo, os clientes que têm uma maior quantidade de pontos
--- nessa primeira query irá retornar os 10 clientes com maiores pontos
--- SELECT *
--- FROM clientes
--- ORDER BY QtdePontos DESC
--- LIMIT 10;
+-- Quais clientes têm uma maior quantidade de pontos?
 
--- quem são os clientes mais antigos cadastrados (ordenar por data)
--- e também quem tem mais pontos para quem tem menos
+-- A primeira query irá retornar os 10 clientes com maiores pontos
+
+SELECT *
+FROM clientes
+ORDER BY QtdePontos DESC
+LIMIT 10;
+
+-- Quem são os clientes mais antigos cadastrados (ordenar por data)?
+
 SELECT *
 FROM clientes
 WHERE flTwitch = 1
-ORDER BY DtCriacao ASC, qtdePontos DESC;
+ORDER BY DtCriacao ASC;

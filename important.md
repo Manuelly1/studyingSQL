@@ -65,7 +65,7 @@
 
 ---
 
--  **`HAVING`:** É um comando conhecido como WHERE do GROUP BY. Ele filtra os grupos criados, ou seja, não aplica um filtro sobre as linhas individuais, como o WHERE, mas sim nos grupos que foram formados na agregação;
+-  **`HAVING`:** É um comando conhecido como WHERE do GROUP BY. Ele filtra os grupos criados, ou seja, não aplica um filtro sobre as linhas individuais, como o WHERE, mas sim nos grupos que foram formados na agregação
 
     ```sql
 
