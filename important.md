@@ -535,7 +535,6 @@
     WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01' 
     GROUP BY IdCliente 
     ORDER BY sum(QtdePontos) DESC 
-    LIMIT 10
 
 ---
 
@@ -591,17 +590,6 @@
 
 ---
 
-#### Passo 3: Limitar aos 10 primeiros (`LIMIT 10`)
-
-    | IdCliente | TotalPontos |
-    |-----------|-------------|
-    | 1         | 450         |
-    | 4         | 300         |
-    | 2         | 200         |
-    | 3         | 180         |
-
-- Como no exemplo há menos de 10 clientes, todos aparecem, mas se houvesse mais, só os 10 maiores seriam exibidos.
-
 #### 2- Retornar as transações de produtos, mostrando todas as informações da transação e o nome do produto associado (ou `NULL` se não houver correspondência)
 
 - **Código da query:**
@@ -646,7 +634,7 @@
     | 4           | 99        | 3          | NULL                 |
 
 
-- As três primeiras linhas encontraram correspondência na tabela produtos, retornando o nome do produto. A última linha (`IdProduto = 99`) não existe em produtos, portanto o valor da coluna DescDescricaoProduto é `NULL`.
+- As três primeiras linhas encontraram correspondência na tabela produtos, retornando o nome do produto. A última linha (`IdProduto = 99`) não existe em produtos, portanto o valor da coluna `DescDescricaoProduto` é `NULL`.
 
 ---
 
@@ -680,7 +668,9 @@
 
 ```
 
-- **Explicação:** A subquery busca na tabela `produtos` o `IdProduto` correspondente ao produto com a descrição **"Resgatar Pônei"**. O resultado pode ser apenas:
+- **Explicação:** 
+
+- A subquery busca na tabela `produtos` o `IdProduto` correspondente ao produto com a descrição **"Resgatar Pônei"**. O resultado pode ser apenas:
 
     | IdProduto |
     |-----------|
@@ -743,7 +733,7 @@
 
 - **Explicação:** 
 
-- A subquery (interna) retorna quem esteve no primeiro dia;
+- A subquery retorna quem esteve no primeiro dia;
 
     - A `substr(DtCriacao, 1, 10)` extrai a parte da string representando a data (formato YYYY-MM-DD), assumindo que `DtCriacao` esteja como string;
 
@@ -801,6 +791,6 @@
 
 - Depois do `JOIN`, o filtro restringe `t1` apenas às transações feitas em 29/08/2025;
 
-- Por fim, `COUNT(DISTINCT a.IdCliente)` conta quantos clientes diferentes aparecem no resultado;
+- Por fim, `COUNT(DISTINCT a.IdCliente)` conta quantos clientes diferentes aparecem no resultado.
 
-- Isso evita duplicar clientes que possam ter feito mais de uma transação no quinto dia.
+    - Isso evita duplicar clientes que possam ter feito mais de uma transação no quinto dia.
