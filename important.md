@@ -63,6 +63,60 @@
 
 - Por fim, `ORDER BY SUM(QtdePontos) DESC` ordena os resultados em ordem decrescente, exibindo primeiro os clientes com maior quantidade total de pontos.
 
+- **Entendendo o `GROUP BY` na Prática:**
+
+    - O comando `GROUP BY` é utilizado para **espremer/agrupar registros** que possuem os mesmos valores em uma ou mais colunas. Contudo, **ele não faz cálculos automaticamente**, apenas separa os dados em grupos. Ex: deseja-se agrupar por IdProduto (como foi feito no arquivo `11_group_bt.sql`), ele separa por ID, gerando, assim, uma categorização. Porém, para obter informações resumidas sobre cada grupo, como a quantidade de registros, a média, o maior valor... Faz-se necessário o uso de **funções de agregação**, como `SUM()`, `COUNT()` e por aí vai.
+
+- **Exemplo Prático:**
+
+    Suponha que a tabela `transacao_produto` tenha os seguintes dados:
+
+    | IdProduto | IdTransacao |
+    |------------|--------------|
+    | 11 | 1 |
+    | 11 | 2 |
+    | 12 | 3 |
+    | 11 | 4 |
+    | 12 | 5 |
+
+---
+
+- **Exemplo 1 — Apenas Agrupando:**
+
+    ```sql
+
+    SELECT IdProduto
+    FROM transacao_produto
+    GROUP BY IdProduto;
+
+- **Resultado:**
+
+    | IdProduto | 
+    |------------|
+    | 11 |
+    | 12 |
+
+    Aqui o SQL apenas mostra os grupos, ele “espreme” a tabela, mas não conta nem calcula nada.
+
+---
+
+- **Exemplo 2 — Agrupando e Contando:**
+
+    ```sql
+
+    SELECT IdProduto, COUNT(*)
+    FROM transacao_produto
+    GROUP BY IdProduto;
+
+- **Resultado:**
+
+    | IdProduto | count(*) |
+    |------------|-----------|
+    | 11 | 3 |
+    | 12 | 2 |
+
+    Aqui, o `COUNT(*)` conta quantos registros existem em cada grupo criado pelo `GROUP BY`.
+
 ---
 
 -  **`HAVING`:** É um comando conhecido como WHERE do GROUP BY. Ele filtra os grupos criados, ou seja, não aplica um filtro sobre as linhas individuais, como o WHERE, mas sim nos grupos que foram formados na agregação
@@ -460,3 +514,128 @@
 ---
 
 - **`UPPER()` / `LOWER()`:** Transforma em maiúsculas/minúsculas
+
+---
+
+- **Exemplo: Retornar os Clientes com mais Pontos em Julho de 2025:**
+
+- Código da query:
+
+     ```sql
+
+    SELECT IdCliente, sum(QtdePontos) AS TotalPontos
+    FROM transacoes 
+    WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01' 
+    GROUP BY IdCliente 
+    ORDER BY sum(QtdePontos) DESC 
+    LIMIT 10
+
+---
+
+- **Tabela original (`transacoes`):** Com dados filtrados para julho (a partir do comando `WHERE`)
+
+    | IdCliente | QtdePontos | DtCriacao   |
+    |-----------|------------|-------------|
+    | 1         | 100        | 2025-07-02  |
+    | 2         | 150        | 2025-07-03  |
+    | 1         | 200        | 2025-07-10  |
+    | 3         | 80         | 2025-07-15  |
+    | 2         | 50         | 2025-07-20  |
+    | 4         | 300        | 2025-07-22  |
+    | 3         | 100        | 2025-07-25  |
+    | 1         | 150        | 2025-07-28  |
+
+---
+
+- **Passo 1a:** Agrupar por `IdCliente` (sem soma ainda)
+
+    | IdCliente | QtdePontos (lista)      |
+    |-----------|-------------------------|
+    | 1         | 100, 200, 150           |
+    | 2         | 150, 50                 |
+    | 3         | 80, 100                 |
+    | 4         | 300                     |
+
+    Neste momento, o `GROUP BY` apenas **organiza as transações em grupos** por cliente, sem realizar cálculos.
+
+---
+
+- **Passo 1b:** Aplicar a soma (`SUM(QtdePontos)`)
+
+    | IdCliente | TotalPontos |
+    |-----------|-------------|
+    | 1         | 450         |
+    | 2         | 200         |
+    | 3         | 180         |
+    | 4         | 300         |
+
+    Agora, a função de agregação `SUM()` soma os pontos de cada cliente, produzindo um valor total por grupo.
+
+---
+
+- **Passo 2:** Ordenar do maior para o menor (`ORDER BY SUM(QtdePontos) DESC`)
+
+    | IdCliente | TotalPontos |
+    |-----------|-------------|
+    | 1         | 450         |
+    | 4         | 300         |
+    | 2         | 200         |
+    | 3         | 180         |
+
+---
+
+- **Passo 3:** Limitar aos 10 primeiros (`LIMIT 10`)
+
+    | IdCliente | TotalPontos |
+    |-----------|-------------|
+    | 1         | 450         |
+    | 4         | 300         |
+    | 2         | 200         |
+    | 3         | 180         |
+
+    Como no exemplo há menos de 10 clientes, todos aparecem, mas se houvesse mais, só os 10 maiores seriam exibidos.
+
+- **Exemplo: Retornar as transações de produtos, mostrando todas as informações da transação e o nome do produto associado (ou `NULL` se não houver correspondência):**
+
+- Código da query:
+
+     ```sql
+
+    SELECT t1.*, t2.DescDescricaoProduto
+    FROM transacao_produto AS t1
+    LEFT JOIN produtos AS t2
+    ON t1.IdProduto = t2.IdProduto;
+    
+---
+
+- **Tabela `transacao_produto` (`t1`):**
+
+    | IdTransacao | IdProduto | Quantidade |
+    |--------------|------------|-------------|
+    | 1 | 11 | 2 |
+    | 2 | 12 | 1 |
+    | 3 | 13 | 4 |
+    | 4 | 99 | 3 |
+
+---
+
+- **Tabela `produtos` (`t2`):**
+
+    | IdProduto | DescDescricaoProduto |
+    |------------|----------------------|
+    | 11 | Presente |
+    | 12 | Caneca |
+    | 13 | Camiseta |
+
+---
+
+- **Resultado do `LEFT JOIN`:**
+
+    | IdTransacao | IdProduto | Quantidade | DescDescricaoProduto |
+    |--------------|------------|-------------|----------------------|
+    | 1 | 11 | 2 | Presente |
+    | 2 | 12 | 1 | Caneca |
+    | 3 | 13 | 4 | Camiseta |
+    | 4 | 99 | 3 | NULL |
+
+    As três primeiras linhas encontraram correspondência na tabela produtos, retornando o nome do produto. A última linha (`IdProduto = 99`) não existe em produtos, portanto o valor da coluna DescDescricaoProduto é `NULL`.
