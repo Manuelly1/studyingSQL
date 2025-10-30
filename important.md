@@ -140,7 +140,8 @@
 
     SELECT * 
     FROM VENDAS 
-    LEFT JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
+    LEFT JOIN CLIENTES 
+        ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
 - Nesse exemplo, `IdCliente` é a chave primária da tabela CLIENTES, e `VENDAS.IdCliente` é a chave estrangeira que referencia essa chave primária. Ao usar o LEFT JOIN, **a tabela da esquerda é aquela que aparece no FROM**, neste caso, VENDAS;
 
@@ -158,7 +159,8 @@
 
     SELECT *
     FROM VENDAS 
-    INNER JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
+    INNER JOIN CLIENTES 
+        ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
 - O INNER JOIN retorna apenas os registros que possuem correspondência em ambas as tabelas;
 
@@ -176,7 +178,8 @@
 
     SELECT *
     FROM VENDAS 
-    RIGHT JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
+    RIGHT JOIN CLIENTES 
+        ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
 - O RIGHT JOIN funciona de forma semelhante ao LEFT JOIN, mas a referência passa a ser a tabela da direita (CLIENTES);
 
@@ -194,7 +197,8 @@
 
     SELECT * 
     FROM VENDAS
-    FULL JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
+    FULL JOIN CLIENTES 
+        ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
 - O FULL JOIN combina o comportamento do LEFT JOIN e do RIGHT JOIN;
 
@@ -294,7 +298,8 @@
 
         SELECT *
         FROM VENDAS
-        INNER JOIN CLIENTES ON VENDAS.IdCliente = CLIENTES.IdCliente;
+        INNER JOIN CLIENTES 
+            ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
     ```
 
@@ -517,9 +522,11 @@
 
 ---
 
-- **Exemplo: Retornar os Clientes com mais Pontos em Julho de 2025:**
+### Exemplos Práticos
 
-- Código da query:
+#### 1- Retornar os Clientes com mais Pontos em Julho de 2025
+
+- **Código da query:**
 
      ```sql
 
@@ -532,7 +539,7 @@
 
 ---
 
-- **Tabela original (`transacoes`):** Com dados filtrados para julho (a partir do comando `WHERE`)
+#### Tabela original (`transacoes`): Com dados filtrados para julho (a partir do comando `WHERE`)
 
     | IdCliente | QtdePontos | DtCriacao   |
     |-----------|------------|-------------|
@@ -547,7 +554,7 @@
 
 ---
 
-- **Passo 1a:** Agrupar por `IdCliente` (sem soma ainda)
+#### Passo 1a: Agrupar por `IdCliente` (sem soma ainda)
 
     | IdCliente | QtdePontos (lista)      |
     |-----------|-------------------------|
@@ -556,11 +563,11 @@
     | 3         | 80, 100                 |
     | 4         | 300                     |
 
-    Neste momento, o `GROUP BY` apenas **organiza as transações em grupos** por cliente, sem realizar cálculos.
+- Neste momento, o `GROUP BY` apenas **organiza as transações em grupos** por cliente, sem realizar cálculos.
 
 ---
 
-- **Passo 1b:** Aplicar a soma (`SUM(QtdePontos)`)
+#### Passo 1b: Aplicar a soma (`SUM(QtdePontos)`)
 
     | IdCliente | TotalPontos |
     |-----------|-------------|
@@ -569,11 +576,11 @@
     | 3         | 180         |
     | 4         | 300         |
 
-    Agora, a função de agregação `SUM()` soma os pontos de cada cliente, produzindo um valor total por grupo.
+- Agora, a função de agregação `SUM()` soma os pontos de cada cliente, produzindo um valor total por grupo.
 
 ---
 
-- **Passo 2:** Ordenar do maior para o menor (`ORDER BY SUM(QtdePontos) DESC`)
+#### Passo 2: Ordenar do maior para o menor (`ORDER BY SUM(QtdePontos) DESC`)
 
     | IdCliente | TotalPontos |
     |-----------|-------------|
@@ -584,7 +591,7 @@
 
 ---
 
-- **Passo 3:** Limitar aos 10 primeiros (`LIMIT 10`)
+#### Passo 3: Limitar aos 10 primeiros (`LIMIT 10`)
 
     | IdCliente | TotalPontos |
     |-----------|-------------|
@@ -593,49 +600,207 @@
     | 2         | 200         |
     | 3         | 180         |
 
-    Como no exemplo há menos de 10 clientes, todos aparecem, mas se houvesse mais, só os 10 maiores seriam exibidos.
+- Como no exemplo há menos de 10 clientes, todos aparecem, mas se houvesse mais, só os 10 maiores seriam exibidos.
 
-- **Exemplo: Retornar as transações de produtos, mostrando todas as informações da transação e o nome do produto associado (ou `NULL` se não houver correspondência):**
+#### 2- Retornar as transações de produtos, mostrando todas as informações da transação e o nome do produto associado (ou `NULL` se não houver correspondência)
 
-- Código da query:
+- **Código da query:**
 
      ```sql
 
     SELECT t1.*, t2.DescDescricaoProduto
     FROM transacao_produto AS t1
     LEFT JOIN produtos AS t2
-    ON t1.IdProduto = t2.IdProduto;
+        ON t1.IdProduto = t2.IdProduto;
     
 ---
 
-- **Tabela `transacao_produto` (`t1`):**
+#### Tabela `transacao_produto` (`t1`):
 
     | IdTransacao | IdProduto | Quantidade |
-    |--------------|------------|-------------|
-    | 1 | 11 | 2 |
-    | 2 | 12 | 1 |
-    | 3 | 13 | 4 |
-    | 4 | 99 | 3 |
+    |-------------|-----------|------------|
+    | 1           | 11        | 2          |
+    | 2           | 12        | 1          |
+    | 3           | 13        | 4          |
+    | 4           | 99        | 3          |
 
 ---
 
-- **Tabela `produtos` (`t2`):**
+#### Tabela `produtos` (`t2`):
 
     | IdProduto | DescDescricaoProduto |
-    |------------|----------------------|
-    | 11 | Presente |
-    | 12 | Caneca |
-    | 13 | Camiseta |
+    |-----------|----------------------|
+    | 11        | Presente             |
+    | 12        | Caneca               |
+    | 13        | Camiseta             |
 
 ---
 
-- **Resultado do `LEFT JOIN`:**
+#### Resultado do `LEFT JOIN`:
 
     | IdTransacao | IdProduto | Quantidade | DescDescricaoProduto |
-    |--------------|------------|-------------|----------------------|
-    | 1 | 11 | 2 | Presente |
-    | 2 | 12 | 1 | Caneca |
-    | 3 | 13 | 4 | Camiseta |
-    | 4 | 99 | 3 | NULL |
+    |-------------|-----------|------------|----------------------|
+    | 1           | 11        | 2          | Presente             |
+    | 2           | 12        | 1          | Caneca               |
+    | 3           | 13        | 4          | Camiseta             |
+    | 4           | 99        | 3          | NULL                 |
 
-    As três primeiras linhas encontraram correspondência na tabela produtos, retornando o nome do produto. A última linha (`IdProduto = 99`) não existe em produtos, portanto o valor da coluna DescDescricaoProduto é `NULL`.
+
+- As três primeiras linhas encontraram correspondência na tabela produtos, retornando o nome do produto. A última linha (`IdProduto = 99`) não existe em produtos, portanto o valor da coluna DescDescricaoProduto é `NULL`.
+
+---
+
+## Subqueries
+
+- As **subqueries** são consultas SQL **aninhadas dentro de outra consulta**. Elas são usadas quando você precisa utilizar o **resultado de uma query como condição para outra**, geralmente dentro de um `WHERE`, `FROM` ou `SELECT`.
+
+#### Quando usar
+
+- As subqueries são úteis quando:
+
+    - É necessário buscar informações que dependem de outra tabela;
+
+    - Você quer evitar junções muito complexas (`JOIN`);
+
+    - Precisa filtrar registros com base em resultados derivados.
+
+- **Atenção:** apesar de úteis, **elas podem ser mais lentas** do que joins em bases de dados grandes, pois o banco precisa executar primeiro a consulta interna (a subquery) para depois aplicar o resultado na consulta principal.
+
+#### Exemplo Prático
+
+```sql
+
+    SELECT *
+    FROM transacao_produto AS t1
+    WHERE t1.IdProduto IN (
+        SELECT IdProduto
+        FROM produtos
+        WHERE DescDescricaoProduto = 'Resgatar Pônei'
+    );
+
+```
+
+- **Explicação:** A subquery busca na tabela `produtos` o `IdProduto` correspondente ao produto com a descrição **"Resgatar Pônei"**. O resultado pode ser apenas:
+
+    | IdProduto |
+    |-----------|
+    | 15        | 
+
+- Já a query principal vai procurar na tabela `transacao_produto` todas as transações cujo `IdProduto` esteja entre os valores retornados pela subquery, neste caso, onde `IdProduto = 15`. **Resultado final:**
+
+    | IdTransacao | IdProduto | Quantidade |
+    |-------------|-----------|------------|
+    | 8           | 15        | 2          |
+    | 12          | 15        | 5          |
+   
+
+- **Em resumo:**
+
+    - A subquery roda primeiro;
+
+    - O resultado dela é usado como filtro na consulta principal;
+
+    - É uma forma de consultar tabelas relacionadas sem precisar usar `JOIN`.
+
+---
+
+### O Exemplo Anterior com `JOIN`:
+
+```sql
+
+    SELECT t1.*, t2.DescDescricaoProduto
+    FROM transacao_produto AS t1
+    INNER JOIN produtos AS t2
+        ON t1.IdProduto = t2.IdProduto
+    WHERE t2.DescDescricaoProduto = 'Resgatar Pônei';
+
+```
+
+- Aplica-se o `INNER JOIN` nesse caso, porque deseja-se o match perfeito, ou seja, que só apareçam os registros que existem nas duas tabelas. Se existir uma transação com `IdProduto = 15`, mas esse produto não existir na tabela produtos, essa linha não aparecerá no resultado, uma vez que queremos apenas transações que tenham um produto válido;
+
+- No exemplo acima, a subquery pode ser mais intuitiva, pois primeiro filtra os produtos pelo nome (`WHERE DescDescricaoProduto = 'Resgatar Pônei'`) e depois usa o resultado dessa filtragem na consulta principal (`transacao_produto`).
+
+---
+
+#### 3- Retornar a quantidade de Clientes que participaram do "primeiro dia" (2025-08-25) e que voltaram no "quinto dia" (2025-08-29)
+
+- **Código da query:**
+
+     ```sql
+
+    SELECT COUNT(DISTINCT IdCliente)
+    FROM transacoes AS t1
+    WHERE t1.IdCliente IN (
+
+        SELECT DISTINCT IdCliente
+        FROM transacoes
+        WHERE substr(DtCriacao, 1, 10) = '2025-08-25'
+
+    )
+    AND substr(t1.DtCriacao, 1, 10) = '2025-08-29';
+
+    ```
+
+- **Explicação:** 
+
+- A subquery (interna) retorna quem esteve no primeiro dia;
+
+    - A `substr(DtCriacao, 1, 10)` extrai a parte da string representando a data (formato YYYY-MM-DD), assumindo que `DtCriacao` esteja como string;
+
+    - Essa consulta retorna a lista de IDs de clientes únicos (`DISTINCT IdCliente`) que tiveram alguma transação em `2025-08-25`, ou seja, os que "compareceram" no primeiro dia.
+
+- Já a consulta externa conta quantos desses voltaram no quinto dia;
+
+    - `t1.IdCliente IN (...)` filtra as transações para apenas os clientes que constam na lista da subquery (os que estavam no primeiro dia);
+
+    - `AND substr(t1.DtCriacao, 1, 10) = '2025-08-29'` restringe o conjunto para as transações ocorridas no quinto dia;
+
+    - `COUNT(DISTINCT IdCliente)` conta quantos clientes distintos aparecem nesse resultado. A quantidade de clientes que estiveram no primeiro dia e que também apareceram no quinto dia.
+
+---
+
+### O Exemplo Anterior com `JOIN`:
+
+```sql
+
+    SELECT COUNT(DISTINCT t1.IdCliente) AS qtd_clientes_retornaram
+    FROM transacoes t1
+    JOIN (
+
+        SELECT DISTINCT IdCliente
+        FROM transacoes
+        WHERE substr(DtCriacao,1,10) = '2025-08-25'
+
+    ) first_day ON t1.IdCliente = first_day.IdCliente
+
+    WHERE substr(t1.DtCriacao,1,10) = '2025-08-29';
+
+```
+
+- **Explicação:**
+
+- Também temos 2 partes principais: 
+
+    - Uma subquery (tabela derivada) chamada `first_day`, que pega os clientes do primeiro dia;
+
+    - A tabela principal `transacoes t1`, que é comparada (`JOIN`) com essa lista para verificar quem voltou no quinto dia.
+
+- A subquery:
+
+    - Seleciona todos os clientes distintos (`DISTINCT`);
+
+    - Filtra apenas as linhas em que a data (`DtCriacao`) é 25/08/2025;
+
+    - O `substr(DtCriacao,1,10)` pega só a parte da data (excluindo hora/minutos, caso existam).
+
+- O `JOIN`: cruza com as transações do quinto dia
+
+    - O `JOIN` conecta cada registro de `t1` com o conjunto de clientes `first_day`;
+
+    - Só entram no resultado os registros onde o `IdCliente` aparece nas duas tabelas. Ou seja, clientes que estão na lista do primeiro dia e também têm transações registradas em `transacoes t1`.
+
+- Depois do `JOIN`, o filtro restringe `t1` apenas às transações feitas em 29/08/2025;
+
+- Por fim, `COUNT(DISTINCT a.IdCliente)` conta quantos clientes diferentes aparecem no resultado;
+
+- Isso evita duplicar clientes que possam ter feito mais de uma transação no quinto dia.
