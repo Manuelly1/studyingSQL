@@ -1,4 +1,4 @@
--- Objetivo: exibir a lista de transações com o produto "Resgatar Ponei"
+-- Objetivo: exibir a lista de transações com produto "Resgatar Ponei"
 
 SELECT *
 FROM transacao_produto

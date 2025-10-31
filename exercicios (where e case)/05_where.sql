@@ -1,4 +1,4 @@
--- Objetivo: exibir a lista de produtos com nome que começa com "Venda de";
+-- Objetivo: exibir a lista de produtos cujos nomes começam com "Venda de"
 
 SELECT *
 FROM produtos
