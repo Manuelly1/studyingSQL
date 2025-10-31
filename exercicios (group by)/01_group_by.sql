@@ -1,5 +1,6 @@
--- quantos clientes têm e-mail cadastrado?
--- diferentes formas de resolver:
+-- Objetivo: exibir a quantidade de clientes com e-mails cadastrados
+
+-- Diferentes formas de resolver:
 
 SELECT sum(flEmail)
 FROM clientes;

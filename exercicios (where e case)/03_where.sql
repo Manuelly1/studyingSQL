@@ -1,4 +1,4 @@
--- lista de clientes com 0 pontos
+-- Objetivo: exibir a lista de clientes com 0 pontos
 
 SELECT *
 FROM clientes

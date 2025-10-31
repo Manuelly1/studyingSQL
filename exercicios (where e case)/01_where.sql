@@ -1,4 +1,4 @@
--- lista de transações com apenas 1 ponto
+-- Objetivo: exibir a lista de transações com apenas 1 ponto
 
 SELECT *
 FROM transacoes

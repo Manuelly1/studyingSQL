@@ -1,5 +1,4 @@
--- listar todas as transações adicionando uma nova coluna
--- sinalizando "alto", "médio" e "baixo" para o valor dos 
+-- Objetivo: listar todas as transações adicionando uma nova coluna sinalizando "alto", "médio" e "baixo" para o valor dos 
 -- pontos [<10; <500; >=500]
 
 SELECT IdTransacao, QtdePontos,
@@ -12,4 +11,3 @@ SELECT IdTransacao, QtdePontos,
 
 FROM transacoes
 
--- ORDER BY QtdePontos DESC

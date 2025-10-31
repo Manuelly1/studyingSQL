@@ -1,4 +1,4 @@
--- lista de pedidos realizados no fim de semana
+-- Objetivo: exibir a lista de pedidos realizados no fim de semana
 
 SELECT IdTransacao, 
         DtCriacao,

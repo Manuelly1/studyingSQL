@@ -1,14 +1,11 @@
--- quantos produtos são de rpg?
+-- Objetivo: exibir a quantidade de produtos que são de rpg
 
--- algumas formas de fazer isso:
+-- Algumas formas de fazer isso:
 
 SELECT count(*)
 FROM produtos
 WHERE DescCategoriaProduto = 'rpg';
 
-SELECT DescCategoriaProduto,
-    count(*)
-
+SELECT count(DescCategoriaProduto)
 FROM produtos
-
 GROUP BY DescCategoriaProduto;

@@ -1,12 +1,8 @@
--- qual cliente fez mais transações no ano de 2024?
+-- Objetivo: exibir o cliente que mais fez transações no ano de 2024
 
--- o count(*) é a mesma coisa do count(distinct IdTransacao), neste caso
+-- O count(*) é a mesma coisa do count(distinct IdTransacao), neste caso
 
--- pode fazer o WHERE assim também:
--- WHERE strftime('%Y', substr(DtCriacao, 1, 19)) = '2024' 
-
--- ou assim:
--- WHERE substr(DtCriacao, 1, 4) = '2024' 
+-- Pode fazer o WHERE assim também: WHERE strftime('%Y', substr(DtCriacao, 1, 19)) = '2024' ou assim: WHERE substr(DtCriacao, 1, 4) = '2024' 
 
 SELECT idCliente,
     count(*)
@@ -20,4 +16,4 @@ GROUP BY IdCliente
 
 ORDER BY count(*) DESC
 
-LIMIT 1
+LIMIT 1;

@@ -1,4 +1,4 @@
--- lista de produtos que termina com LOVER
+-- Objetivo: exibir a lista de produtos que termina com LOVER
 
 SELECT *
 FROM produtos
