@@ -49,7 +49,7 @@
     FROM transacoes
     WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01'
     GROUP BY IdCliente
-    ORDER BY sum(QtdePontos) DESC
+    ORDER BY sum(QtdePontos) DESC;
 
 - No caso acima, foram selecionadas as colunas `IdCliente` e `QtdePontos` (esta última somada por meio da função SUM);
 
@@ -128,7 +128,7 @@
     WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01'
     GROUP BY IdCliente
     HAVING sum(QtdePontos) >= 4000
-    ORDER BY sum(QtdePontos) DESC
+    ORDER BY sum(QtdePontos) DESC;
 
 - No exemplo acima, depois de agrupar as transações por cliente, o `HAVING` exibe somente os clientes que acumularam 4000 pontos ou mais no período de julho.
 
@@ -282,9 +282,9 @@
 
 ---
 
-## Diferença entre UNION e JOIN
+## Diferença entre JOIN e UNION
 
-- Embora `UNION` e `JOIN` possam parecer semelhantes, já que ambos combinam dados de mais de uma tabela, eles **funcionam de formas bem diferentes**:
+- Embora `JOIN` e `UNION` possam parecer semelhantes, já que ambos combinam dados de mais de uma tabela, eles **funcionam de formas bem diferentes**:
 
 - **`JOIN` (INNER, LEFT, RIGHT, FULL):**  
 
@@ -479,7 +479,7 @@
     LEFT JOIN produtos AS t2
             ON t1.IdProduto = t2.IdProduto
 
-    LIMIT 10
+    LIMIT 10;
 
 - **Explicação da consulta acima:**
 
@@ -534,7 +534,7 @@
     FROM transacoes 
     WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01' 
     GROUP BY IdCliente 
-    ORDER BY sum(QtdePontos) DESC 
+    ORDER BY sum(QtdePontos) DESC; 
 
 ---
 
