@@ -1,13 +1,11 @@
--- Qual a quantidade de transações em julho de 2025?
+-- Objetivo: Contar a quantidade de transações realizadas em julho de 2025.
 
--- É válido lembrar que O COUNT(*) é o necessário para responder “quantidade de transações”, uma vez que conta todas as linhas 
--- (cada uma é uma transação). 
+-- Observações:
+-- COUNT(*) conta todas as linhas da tabela, ou seja, todas as transações;
+-- COUNT(DISTINCT idCliente) contaria quantos clientes distintos realizaram transações (não necessário aqui).
 
--- O COUNT(DISTINCT idCliente) só seria usado se o exercício pedisse também quantos clientes distintos fizeram transações.
-
-SELECT 
-    count(*)
+SELECT count(*)
     -- count(DISTINCT idCliente) 
+
 FROM transacoes 
-WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01'
-ORDER BY DtCriacao DESC
+WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01';

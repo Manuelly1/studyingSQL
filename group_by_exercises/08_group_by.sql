@@ -1,13 +1,12 @@
--- Objetivo: exibir o produto com mais pontos transacionados
+-- Objetivo: Exibir o produto com mais pontos transacionados
 
--- 2 formas de fazer:
-
+-- Forma 1: Somar os valores de cada produto e ordenar pelo total de pontos
 SELECT IdProduto,
-        sum(vlProduto) AS totalPontos
-
+       sum(vlProduto) AS totalPontos
 FROM transacao_produto
 GROUP BY IdProduto
 ORDER BY totalPontos DESC
 LIMIT 1;
 
--- Poderia também só ter feito sum(vlProduto * QtdeProduto)
+-- Observação: também poderia calcular diretamente a soma multiplicando valor pela quantidade:
+-- sum(vlProduto * QtdeProduto)

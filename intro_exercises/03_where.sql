@@ -1,4 +1,4 @@
--- selecione todos os clientes com mais de 500 pontos
+-- Objetivo: Selecionar todos os clientes com mais de 500 pontos
 
 SELECT *
 FROM clientes

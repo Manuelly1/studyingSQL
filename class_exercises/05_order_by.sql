@@ -1,13 +1,11 @@
--- Quais clientes têm uma maior quantidade de pontos?
-
--- A primeira query irá retornar os 10 clientes com maiores pontos
+-- Objetivo: exibir os 10 clientes com maior quantidade de pontos (por isso usou o ORDER BY DESC)
 
 SELECT *
 FROM clientes
 ORDER BY QtdePontos DESC
 LIMIT 10;
 
--- Quem são os clientes mais antigos cadastrados (ordenar por data)?
+-- Objetivo: exibir os clientes mais antigos cadastrados (com flTwitch = 1), ordenando por data de criação
 
 SELECT *
 FROM clientes

@@ -1,4 +1,4 @@
--- Objetivo: exibir a lista de produtos que são "chapéu"   
+-- Objetivo: Exibir a lista de produtos que são "chapéu"   
 
 SELECT *
 FROM produtos

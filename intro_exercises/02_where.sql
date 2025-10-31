@@ -1,4 +1,4 @@
--- selecione todas as transações de 50 pontos (exatos)
+-- Objetivo: Selecionar todas as transações de 50 pontos (exatos)
 
 SELECT *
 FROM transacoes

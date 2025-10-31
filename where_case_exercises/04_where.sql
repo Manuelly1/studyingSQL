@@ -1,4 +1,4 @@
--- Objetivo: exibir a lista de clientes com 100 a 200 pontos (inclusive ambos)
+-- Objetivo: Exibir a lista de clientes com 100 a 200 pontos (inclusive ambos)
 
 SELECT *
 FROM clientes

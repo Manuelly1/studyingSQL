@@ -1,4 +1,4 @@
--- Objetivo: exibir o produto mais transacionado
+-- Objetivo: Exibir o produto mais transacionado
 
 -- 2 formas de fazer:
 
@@ -21,7 +21,7 @@ GROUP BY IdProduto
 ORDER BY count(*) DESC
 LIMIT 1;
 
--- Com SUM:
+-- Com SUM (a mais indicada para esse caso):
 
 SELECT IdProduto,
         sum(QtdeProduto) AS qtdeProdutoSum

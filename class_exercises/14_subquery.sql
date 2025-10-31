@@ -1,28 +1,19 @@
--- Lista de transações com o produto "Resgatar Pônei"
+-- Objetivo: Listar todas as transações do produto "Resgatar Pônei".
 
--- SELECT *
--- FROM produtos
+-- Explicações:
+-- O produto "Resgatar Pônei" tem IdProduto = 15 (descoberto consultando a tabela produtos);
+-- Subquery: permite usar o resultado de outra consulta como condição no WHERE sem que tenha que fazer uma consulta separada antes;
+-- Aqui, a subquery retorna o IdProduto do produto com DescDescricaoProduto = 'Resgatar Pônei';
+-- A cláusula IN verifica se t1.IdProduto está dentro do resultado da subquery;
 
--- A partir desse select acima descobrimos que o "Resgatar Pônei" é id = 15
-
--- Depois fizemos esta outra query:
-
--- SELECT *
--- FROM transacao_produto
--- WHERE IdProduto = 15
-
--- Tem como fazer isso com o JOIN, mas há outra maneira: já que uma query retorna outra tabela, será que não seria possível 
--- consultar essa nova tabela que foi gerada? Consultar o novo resultado? É aqui que entra as subqueries 
-
--- Ou seja, está colocando como condição dentro do WHERE o resultado de uma outra query. Isso é feito porque as informações do outro
--- campo estão dentro da outra tabela (no caso, produtos). Primeiro realiza-se a query que se encontra dentro dos parênteses
-
--- as subqueries não são muito indicadas, uma vez que consomem muito processamento
+-- Observação: subqueries podem consumir mais processamento que um JOIN direto, então tem que examinar bem se vale a pena usá-las nesse contexto.
 
 SELECT *
 FROM transacao_produto AS t1
 WHERE t1.IdProduto IN (
+
     SELECT IdProduto
     FROM produtos
     WHERE DescDescricaoProduto = 'Resgatar Pônei'
-)
+
+);

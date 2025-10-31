@@ -1,9 +1,12 @@
--- Qual a média da carteira de pontos dos clientes?
+-- Objetivo: Calcular a média da carteira de pontos dos clientes.
 
--- São 2 formas de fazer (usando o AVG ou sum/count), diferença importante: AVG ignora valores NULL. SUM/COUNT pode considerar 
--- NULL no COUNT(idCliente) (dependendo do campo), então os resultados podem diferir se houver nulos.
+-- Observações:
 
--- As linhas comentadas não influenciam no objetivo da query.
+-- Há duas formas de calcular a média: 
+-- 1) AVG(QtdePontos) → ignora valores NULL;
+-- 2) SUM(QtdePontos)/COUNT(idCliente) → pode incluir ou excluir NULL dependendo do campo usado no COUNT.
+
+-- As linhas comentadas (min, max, sum) não influenciam no cálculo da média, são apenas demonstrações.
 
 SELECT avg(QtdePontos),
         sum(QtdePontos)/count(idCliente)
@@ -11,4 +14,4 @@ SELECT avg(QtdePontos),
        -- max(QtdePontos) AS maxCarteira,
        -- sum(flTwitch),
        -- sum(flEmail)
-FROM clientes
+FROM clientes;

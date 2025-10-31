@@ -1,6 +1,10 @@
--- Quais clientes mais perderam pontos por Lover?
+-- Objetivo: Listar os clientes que mais perderam pontos com produtos da categoria "Lovers"
 
--- Não precisou da tabela clientes, pois na de transações já se tem as informações de IdCliente e quantidade de pontos
+-- Explicações:
+-- Não foi necessário usar a tabela clientes, pois a tabela transacoes já contém IdCliente e QtdePontos;
+-- LEFT JOINs conectam transacoes → transacao_produto → produtos para acessar a categoria do produto;
+-- Filtra pela categoria 'lovers' e soma os pontos por cliente;
+-- ORDER BY totalPontos ASC retorna primeiro os clientes que mais perderam pontos, que é o objetivo do problema.
 
 SELECT t1.IdCliente, 
     sum(t1.QtdePontos) AS totalPontos
@@ -14,9 +18,6 @@ LEFT JOIN produtos AS t3
     ON t2.IdProduto = t3.IdProduto
 
 WHERE t3.DescCategoriaProduto = 'lovers'
-
 GROUP BY t1.IdCliente
-
 ORDER BY totalPontos ASC 
-
-LIMIT 5 
+LIMIT 5;

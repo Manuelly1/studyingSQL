@@ -1,4 +1,4 @@
--- Filtra os registros da tabela 'produtos' para mostrar apenas aqueles que estão dentro da categoria RPG
+-- Filtra os registros da tabela produtos para mostrar apenas aqueles que estão dentro da categoria RPG
 
 SELECT *
 FROM produtos

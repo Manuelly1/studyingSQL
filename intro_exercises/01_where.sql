@@ -1,4 +1,4 @@
--- selecione todos os clientes com e-mail cadastrado
+-- Objetivo: Selecionar todos os clientes com e-mail cadastrado
 
 SELECT *
 FROM clientes

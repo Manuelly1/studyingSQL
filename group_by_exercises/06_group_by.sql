@@ -1,12 +1,11 @@
--- Objetivo: exibir o dia da semana que teve mais pedidos em 2025
+-- Objetivo: Exibir o dia da semana que teve mais pedidos em 2025
 
--- Usamos strftime para extrair o dia da semana do campo DtCriacao
--- '%w' retorna o dia da semana como número (0=domingo, 1=segunda, ..., 6=sábado)
--- substr é usado para pegar apenas a parte da data (YYYY-MM-DD) caso DtCriacao tenha hora
+-- Explicações:
+-- strftime('%w', ...) extrai o dia da semana do campo DtCriacao (0=domingo, 1=segunda, ..., 6=sábado);
+-- substr(DtCriacao, 1, 10) pega apenas a parte da data (YYYY-MM-DD);
+-- GROUP BY agrupa as transações por dia da semana.
 
--- O GROUP BY "espreme"/agrupa as transações pelo dia da semana
-
--- O resultado será 5, ou seja, sexta-feira, já que a contagem dos dias começa em 0
+-- É retornado 5 como resultado, o que indica o dia como sendo sexta-feira (a contagem dos dias começa em 0).
 
 SELECT strftime('%w', substr(DtCriacao, 1, 10)) AS diaSemana,
 

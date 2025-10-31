@@ -1,11 +1,11 @@
--- Em 2024, quantas transações de Lovers  tivemos?
+-- Objetivo: Retornar a quantidade de transações do produto "Lovers" em 2024
 
--- teve que fazer 2 LEFT JOIN, pois na de transacao_produto não tinha todas as informações do produto
--- o segundo JOIN fica a direita do primeiro JOIN
--- para retornar a categoria pode usar o GROUP BY, ou um AND a mais no WHERE com 
--- t3.DescCategoriaProduto = 'lovers'
--- aplicamos o HAVING só para exemplificar a sua aplicação
+-- Explicações:
+-- Foram necessários 2 LEFT JOINs, pois na tabela transacao_produto não estavam todas as informações do produto;
+-- O segundo JOIN é à direita do primeiro, conectando produtos à transacao_produto;
+-- Para filtrar por categoria, poderia usar GROUP BY ou adicionar um AND no WHERE, por exemplo: t3.DescCategoriaProduto = 'lovers';
 
+-- Observação: O HAVING foi usado aqui apenas para exemplificar sua aplicação (filtra grupos após o GROUP BY).
 
 SELECT t3.DescCategoriaProduto,
         count(DISTINCT t1.IdTransacao)
@@ -22,7 +22,5 @@ WHERE t1.DtCriacao >= '2024-01-01' AND
     t1.DtCriacao < '2025-01-01' 
 
 GROUP BY t3.DescCategoriaProduto 
-
 HAVING count(DISTINCT t1.IdTransacao) < 1000
-
-ORDER BY count(DISTINCT t1.IdTransacao) DESC
+ORDER BY count(DISTINCT t1.IdTransacao) DESC;

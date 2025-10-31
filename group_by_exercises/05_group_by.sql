@@ -1,8 +1,9 @@
--- Objetivo: exibir o valor médio de pontos positivos por dia
+-- Objetivo: Exibir o valor médio de pontos positivos por dia
 
--- Fizemos isso na data para deixá-la apenas no formato data mesmo, sem incluir a hora. Tem que usar o DISTINCT nos dias, pois não 
--- queremos dias repetidos. Além disso, não usamos a operação AVG, pois a tabela original não está formatada por dia.
-
+-- Explicações:
+-- A data foi formatada para considerar apenas o dia, sem a hora;
+-- Usa DISTINCT nos dias, pois não deve-se contar dias repetidos;
+-- Não usa AVG diretamente, porque a tabela original não está organizada por dia. 
 
 SELECT sum(QtdePontos) AS totalPontos, 
         
