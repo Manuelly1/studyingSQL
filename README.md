@@ -29,6 +29,8 @@ Este repositório contém exercícios e estudos realizados em SQL, incluindo pr�
 
     - `leetcode_problemas` -> Exercícios da plataforma LeetCode (sem bases, rodar direto na plataforma);
 
+    - `chat_exercises` -> Exercícios feitos a partir de uma lista elaborada pelo ChatGPT;
+
     - `assets` -> Materiais complementares;
 
     - `summary_and_examples.md` -> Principais conceitos, comandos usados e exemplos.  
@@ -37,4 +39,4 @@ Este repositório contém exercícios e estudos realizados em SQL, incluindo pr�
 
 ### 📄 [Recomendo começar por aqui](summary_and_examples.md)
 
----
+
