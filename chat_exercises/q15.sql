@@ -1,0 +1,1 @@
+-- Objetivo: Mostrar o id e o valor total gasto pelos clientes que compraram acima da média geral (use subconsulta com AVG())
