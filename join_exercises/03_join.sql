@@ -7,6 +7,10 @@
 -- Filtra pelo produto chamado "Lista de presença", por isso é necessário juntar as duas tabelas adicionais 
 -- (transacao_produto e produtos).
 
+-- Observação: O COUNT(DISTINCT t1.IdTransacao) foi usado nesse caso porque o objetivo é descobrir em qual mês houve mais 
+-- listas de presença assinadas. Cada transação equivale a uma "lista de presença assinada". Ao usar o DISTINCT, ele conta
+-- quantas transações únicas envolveram o produto "Lista de presença" em cada mês.
+
 SELECT
         substr(t1.DtCriacao, 1, 7) AS anoMes,
         count(DISTINCT t1.IdTransacao) AS qtdeTransacao,
