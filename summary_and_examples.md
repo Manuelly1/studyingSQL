@@ -795,6 +795,8 @@
 
     - Isso evita duplicar clientes que possam ter feito mais de uma transação no quinto dia.
 
+---
+
 ## Common Table Expressions (CTEs)
 
 - As CTEs são **“tabelas temporárias nomeadas”** criadas dentro de uma consulta SQL;
