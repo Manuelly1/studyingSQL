@@ -990,6 +990,113 @@
 
 ---
 
+**Terceiro Exemplo - Primeira Forma**
 
+```sql
 
+    WITH tb_clientes_janeiro AS (
+
+        SELECT DISTINCT IdCliente
+
+        FROM transacoes
+
+        WHERE DtCriacao >= '2025-01-01' 
+            AND DtCriacao < '2025-02-01'
+
+    )
+
+    SELECT count(DISTINCT t1.IdCliente),
+        count(DISTINCT t2.IdCliente)
+
+    FROM tb_clientes_janeiro AS t1
+
+    LEFT JOIN transacoes AS t2
+        ON t1.IdCliente = t2.IdCliente
+        AND t2.DtCriacao >= '2025-08-25'
+        AND t2.DtCriacao < '2025-08-30';
+
+```
+
+- **Objetivo:** Verificar, dentre os clientes que estavam ativos em janeiro/2025, quantos também assistiram (ou participaram de 
+transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
+
+- **Explicação:** 
+
+- A CTE `tb_clientes_janeiro` seleciona todos os clientes que tiveram qualquer transação durante o mês de janeiro de 2025;
+
+- No `SELECT` principal, aplica-se um `LEFT JOIN` entre os clientes de janeiro (`t1`) e a tabela de `transações` (`t2`), mas com uma condição adicional no `ON`:
+
+    - `AND t2.DtCriacao >= '2025-08-25'` 
+    - `AND t2.DtCriacao < '2025-08-30'`
+
+- Isso significa que o `JOIN` só vai considerar as transações realizadas no período do curso de SQL;
+
+- Dessa forma:
+
+    - `count(DISTINCT t1.IdCliente)`: conta o total de clientes de janeiro;
+
+    - `count(DISTINCT t2.IdCliente)`: conta quantos desses também tiveram transações (ou seja, participaram) no curso de SQL.
+
+- O uso do `AND` dentro do `ON` é importante, pois ele filtra apenas o lado direito (`transações`) antes da junção, sem afetar a base da esquerda (`tb_clientes_janeiro`). Isso garante que apenas transações do curso sejam consideradas no cálculo.
+
+--- 
+
+**Terceiro Exemplo - Segunda Forma**
+
+```sql
+
+    WITH tb_clientes_janeiro AS (
+
+        SELECT DISTINCT IdCliente
+
+        FROM transacoes
+
+        WHERE DtCriacao >= '2025-01-01' 
+            AND DtCriacao < '2025-02-01'
+
+    ),
+
+    tb_clientes_curso AS (
+
+        SELECT DISTINCT IdCliente
+
+        FROM transacoes
+
+        WHERE DtCriacao >= '2025-08-25'
+            AND DtCriacao < '2025-08-30';
+
+    )
+
+    SELECT count(t1.IdCliente) AS clienteJaneiro,
+        count(t2.IdCliente) AS clienteCurso
+
+    FROM tb_clientes_janeiro AS t1
+
+    LEFT JOIN tb_clientes_curso AS t2
+        ON t1.IdCliente = t2.IdCliente;
+
+```
+
+- **Objetivo:** Verificar, dentre os clientes que estavam ativos em janeiro/2025, quantos também assistiram (ou participaram de 
+transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
+
+- **Explicação:** 
+
+- Aqui, são criadas duas CTEs:
+
+    - `tb_clientes_janeiro`: contém os clientes que tiveram transações em janeiro;
+
+    - `tb_clientes_curso`: contém os clientes que participaram do curso de SQL em agosto.
+
+- No `SELECT` final, aplica-se um `LEFT JOIN` entre as duas bases;
+
+- Assim:
+
+    - `count(t1.IdCliente)`: retorna o total de clientes em janeiro;
+
+    - `count(t2.IdCliente)`: retorna quantos desses também estão na lista do curso.
+
+- Essa abordagem é mais legível e modular, pois separa claramente os dois conjuntos de clientes (janeiro e agosto), evitando ambiguidades com condições dentro do `JOIN`.
+
+--- 
 

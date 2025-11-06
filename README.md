@@ -27,6 +27,8 @@ Este repositório contém exercícios e estudos realizados em SQL, incluindo pr�
 
     - `join_exercises` -> Exercícios com JOIN (LEFT, RIGHT, INNER);
 
+    - `cte_join_exercises` -> Exercícios com CTEs e JOIN;
+
     - `leetcode_problemas` -> Exercícios da plataforma LeetCode (sem bases, rodar direto na plataforma);
 
     - `chat_exercises` -> Exercícios feitos a partir de uma lista elaborada pelo ChatGPT;
