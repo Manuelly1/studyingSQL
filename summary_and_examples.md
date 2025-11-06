@@ -931,7 +931,8 @@
     SELECT 
             substr(t2.DtCriacao, 1, 10) AS dtDia,
             count(DISTINCT t1.IdCliente) AS qtdeCliente,
-            1.* count(DISTINCT t1.IdCliente) / (select count(*) from tb_clientes_dia1) AS proporcaoClientes
+            1.* count(DISTINCT t1.IdCliente) / (select count(*) from tb_clientes_dia1) AS pctRetencao,
+            1 - 1.* count(DISTINCT t1.IdCliente) / (select count(*) from tb_clientes_dia1) AS pctChurn
 
     FROM tb_clientes_dia1 AS t1
 
@@ -959,13 +960,19 @@
 
     - Quantos continuaram ativos em cada dia (coluna `qtdeCliente`);
     
-    - E qual a proporção deles em relação ao total de alunos do primeiro dia (`proporcaoClientes`).
+    - E qual a proporção deles em relação ao total de alunos do primeiro dia (`pctRetencao`);
 
-- Essa segunda parte utiliza um `LEFT JOIN` entre a lista de clientes do primeiro dia e todas as transações do período analisado. Dessa forma, é possível medir a taxa de permanência (retenção) ou, inversamente, identificar a taxa de cancelamento (churn) conforme a proporção de alunos ativos diminui ao longo dos dias;
+    - A primeira expressão (`pctRetencao`) calcula a proporção de alunos ativos em cada dia, dividindo o número de alunos do dia 1 que ainda tiveram transações (`count(DISTINCT t1.IdCliente)`) pelo total de alunos que começaram o curso (`select count(*) from tb_clientes_dia1`). Em outras palavras, mostra o percentual de alunos que permaneceram ativos até aquele dia;
 
-- Explicando de forma mais detalhada acerca do uso do `LEFT JOIN`:
+    - A segunda expressão (`pctChurn`) faz o oposto: ela calcula a proporção de alunos que já abandonaram o curso, subtraindo a taxa de retenção de 1. Assim, `pctChurn = 1 - pctRetencao`. No exemplo anterior, se pctChurn = 0.2 (ou 20%), compreende-se que 20% dos alunos já deixaram de participar;
+    
+    - O uso de `1.*` antes da divisão serve para forçar o cálculo em formato decimal, evitando arredondamentos inteiros (como poderia ocorrer em alguns bancos de dados).
 
-    - Ele mantém todos os registros da tabela da ESQUERDA (`tb_clientes_dia1`) mesmo quando não há correspondência na tabela da DIREITA (`transacoes`). Isso permite contar também os alunos que PARARAM de ter transações (aparecem com campos de `t2 = NULL`), informação essencial para medir churn.
+- A segunda parte utiliza um `LEFT JOIN` entre a lista de clientes do primeiro dia e todas as transações do período analisado. Dessa forma, é possível medir a taxa de permanência (retenção) ou, inversamente, identificar a taxa de cancelamento (churn) conforme a proporção de alunos ativos diminui ao longo dos dias;
+
+- **Explicando de forma mais detalhada acerca do uso do `LEFT JOIN`:**
+
+    - Ele mantém todos os registros da **tabela da esquerda (`tb_clientes_dia1`)** mesmo quando não há correspondência na tabela da direita (`transacoes`). Isso permite **contar também os alunos que pararam de ter transações** (aparecem com campos de `t2 = NULL`), informação essencial para medir churn.
 
 - **Comportamento:**
 
