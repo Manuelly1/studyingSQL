@@ -45,9 +45,13 @@
 
     ```sql
 
-    SELECT IdCliente, sum(QtdePontos)
+    SELECT IdCliente, 
+        sum(QtdePontos)
+
     FROM transacoes
-    WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01'
+    WHERE DtCriacao >= '2025-07-01' 
+        AND DtCriacao < '2025-08-01'
+
     GROUP BY IdCliente
     ORDER BY sum(QtdePontos) DESC;
 
@@ -104,7 +108,9 @@
 
     ```sql
 
-    SELECT IdProduto, COUNT(*)
+    SELECT IdProduto, 
+        COUNT(*)
+
     FROM transacao_produto
     GROUP BY IdProduto;
 
@@ -123,9 +129,13 @@
 
     ```sql
 
-    SELECT IdCliente, sum(QtdePontos)
+    SELECT IdCliente, 
+        sum(QtdePontos)
+
     FROM transacoes
-    WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01'
+    WHERE DtCriacao >= '2025-07-01' 
+        AND DtCriacao < '2025-08-01'
+
     GROUP BY IdCliente
     HAVING sum(QtdePontos) >= 4000
     ORDER BY sum(QtdePontos) DESC;
@@ -140,6 +150,7 @@
 
     SELECT * 
     FROM VENDAS 
+
     LEFT JOIN CLIENTES 
         ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
@@ -159,6 +170,7 @@
 
     SELECT *
     FROM VENDAS 
+
     INNER JOIN CLIENTES 
         ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
@@ -178,6 +190,7 @@
 
     SELECT *
     FROM VENDAS 
+
     RIGHT JOIN CLIENTES 
         ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
@@ -197,6 +210,7 @@
 
     SELECT * 
     FROM VENDAS
+
     FULL JOIN CLIENTES 
         ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
@@ -267,7 +281,8 @@
             DtCriacao,
             substr(DtCriacao, 1, 19) AS dtSubString,
             datetime(substr(DtCriacao, 1, 19)) AS dtCriacaoNova,
-            strftime('%W', datetime(substr(DtCriacao, 1, 19))) AS diaSemana 
+            strftime('%W', datetime(substr(DtCriacao, 1, 19))) AS diaSemana
+
     FROM clientes;
 
     ```
@@ -298,6 +313,7 @@
 
         SELECT *
         FROM VENDAS
+
         INNER JOIN CLIENTES 
             ON VENDAS.IdCliente = CLIENTES.IdCliente;
 
@@ -431,10 +447,12 @@
     ```sql
 
     SELECT nome,
+
         CASE 
             WHEN idade >= 18 THEN 'Adulto'
             ELSE 'Menor'
         END AS Categoria 
+
     FROM CLIENTES;
 
 - **Explicação da consulta acima:** 
@@ -455,6 +473,7 @@
 
     SELECT nome,
         COALESCE(email, 'sem email cadastrado') AS contato
+
     FROM CLIENTES;
 
 - **Explicação da consulta acima:** 
@@ -472,12 +491,12 @@
     ```sql
 
     SELECT t1.*, 
-            t2.DescDescricaoProduto
+        t2.DescDescricaoProduto
 
     FROM transacao_produto AS t1
 
     LEFT JOIN produtos AS t2
-            ON t1.IdProduto = t2.IdProduto
+        ON t1.IdProduto = t2.IdProduto
 
     LIMIT 10;
 
@@ -530,9 +549,13 @@
 
      ```sql
 
-    SELECT IdCliente, sum(QtdePontos) AS TotalPontos
+    SELECT IdCliente, 
+        sum(QtdePontos) AS TotalPontos
+
     FROM transacoes 
-    WHERE DtCriacao >= '2025-07-01' AND DtCriacao < '2025-08-01' 
+    WHERE DtCriacao >= '2025-07-01' 
+        AND DtCriacao < '2025-08-01' 
+
     GROUP BY IdCliente 
     ORDER BY sum(QtdePontos) DESC; 
 
@@ -596,8 +619,11 @@
 
      ```sql
 
-    SELECT t1.*, t2.DescDescricaoProduto
+    SELECT t1.*, 
+        t2.DescDescricaoProduto
+
     FROM transacao_produto AS t1
+
     LEFT JOIN produtos AS t2
         ON t1.IdProduto = t2.IdProduto;
     
@@ -660,10 +686,13 @@
 
     SELECT *
     FROM transacao_produto AS t1
+
     WHERE t1.IdProduto IN (
+
         SELECT IdProduto
         FROM produtos
         WHERE DescDescricaoProduto = 'Resgatar Pônei'
+
     );
 
 ```
@@ -700,8 +729,10 @@
 
     SELECT t1.*, t2.DescDescricaoProduto
     FROM transacao_produto AS t1
+
     INNER JOIN produtos AS t2
         ON t1.IdProduto = t2.IdProduto
+
     WHERE t2.DescDescricaoProduto = 'Resgatar Pônei';
 
 ```
@@ -720,6 +751,7 @@
 
     SELECT COUNT(DISTINCT IdCliente)
     FROM transacoes AS t1
+
     WHERE t1.IdCliente IN (
 
         SELECT DISTINCT IdCliente
@@ -727,6 +759,7 @@
         WHERE substr(DtCriacao, 1, 10) = '2025-08-25'
 
     )
+
     AND substr(t1.DtCriacao, 1, 10) = '2025-08-29';
 
     ```
@@ -755,6 +788,7 @@
 
     SELECT COUNT(DISTINCT t1.IdCliente) AS qtd_clientes_retornaram
     FROM transacoes t1
+
     JOIN (
 
         SELECT DISTINCT IdCliente
@@ -808,8 +842,11 @@
 ```sql
 
     WITH nome_cte AS (
+
         SELECT ...
+
     )
+
     SELECT *
     FROM nome_cte;
 
@@ -825,7 +862,9 @@
 
 - Permite criar várias CTEs na mesma consulta.
 
-#### Exemplo Prático:
+#### Exemplos Práticos com CTEs:
+
+**Primeiro Exemplo**
 
 ```sql
 
@@ -853,9 +892,9 @@
 
 ```
 
-- **Explicação:** 
+- **Objetivo:** Comparar os clientes que compraram no primeiro dia com os que compraram no último dia, identificando quais clientes do primeiro dia também aparecem (ou não) no último dia;
 
-- O **objetivo** da query acima é comparar os clientes que compraram no primeiro dia com os que compraram no último dia, identificando quais clientes do primeiro dia também aparecem (ou não) no último dia;
+- **Explicação:** 
 
 - O comando `WITH` é utilizado para criar uma "tabela temporária nomeada" que pode ser referenciada dentro da mesma consulta SQL;
 
@@ -872,4 +911,78 @@
 #### Por que é mais interessante usar CTEs do que subqueries?
 
 - Porque as `CTEs` permitem dividir o problema em etapas lógicas: primeiro filtramos uma parte da base (clientes do primeiro dia), depois filtramos outra (clientes do último dia) e, por fim, cruzamos os resultados de forma organizada e legível. Além disso, o uso de `CTEs` torna o código mais limpo, fácil de manter e reutilizar em consultas mais complexas, em vez de aninhar várias subqueries difíceis de entender, conforme mencionado no subtópico **Vantagens**.
+
+---
+
+**Segundo Exemplo**
+
+```sql
+
+    WITH tb_clientes_dia1 AS (
+
+        SELECT DISTINCT IdCliente
+
+        FROM transacoes
+        WHERE DtCriacao >= '2025-08-25'
+            AND DtCriacao < '2025-08-26'
+
+    )
+
+    SELECT 
+            substr(t2.DtCriacao, 1, 10) AS dtDia,
+            count(DISTINCT t1.IdCliente) AS qtdeCliente,
+            1.* count(DISTINCT t1.IdCliente) / (select count(*) from tb_clientes_dia1) AS proporcaoClientes
+
+    FROM tb_clientes_dia1 AS t1
+
+    LEFT JOIN transacoes AS t2
+        ON t1.IdCliente = t2.IdCliente
+
+    WHERE t2.DtCriacao >= '2025-08-25'
+        AND t2.DtCriacao < '2025-08-30'
+
+    GROUP BY dtDia;
+
+```
+
+- **Objetivo:** Analisar a curva de Churn (cancelamento) do curso de SQL;
+
+- **Explicação:** 
+
+- Nesta query considera-se apenas os alunos que começaram no primeiro dia do curso, para, assim, poder observar o "cancelamento real" dos ingressantes ao longo dos dias de curso. O processo é dividido em duas partes:
+
+    1. Seleção dos alunos que iniciaram no primeiro dia (CTE);
+    
+    2. Cálculo da curva de retenção/churn com base nesses alunos.
+
+- A **primeira parte** resgata cada cliente que teve transação no primeiro dia, enquanto a **segunda parte** relaciona esses clientes às suas transações nos dias seguintes, contabilizando:
+
+    - Quantos continuaram ativos em cada dia (coluna `qtdeCliente`);
+    
+    - E qual a proporção deles em relação ao total de alunos do primeiro dia (`proporcaoClientes`).
+
+- Essa segunda parte utiliza um `LEFT JOIN` entre a lista de clientes do primeiro dia e todas as transações do período analisado. Dessa forma, é possível medir a taxa de permanência (retenção) ou, inversamente, identificar a taxa de cancelamento (churn) conforme a proporção de alunos ativos diminui ao longo dos dias;
+
+- Explicando de forma mais detalhada acerca do uso do `LEFT JOIN`:
+
+    - Ele mantém todos os registros da tabela da ESQUERDA (`tb_clientes_dia1`) mesmo quando não há correspondência na tabela da DIREITA (`transacoes`). Isso permite contar também os alunos que PARARAM de ter transações (aparecem com campos de `t2 = NULL`), informação essencial para medir churn.
+
+- **Comportamento:**
+
+- Para cada `IdCliente` em `tb_clientes_dia1`:
+
+    - Se existir(s) transação(ões) correspondente(s) em `transacoes`, essas linhas aparecem normalmente;
+
+    - Se não existir transação correspondente, o resultado terá uma linha com os campos de `transacoes = NULL`.
+
+- Porque isso importa para churn/retenção:
+
+    - Deseja-se saber, em cada dia, quantos dos ingressantes do dia 1 ainda estavam ativos;
+
+    - Se um ingressante sumiu (não fez transações posteriores), precisamos que ele continue presente na base de análise para contabilizar a perda (aparência de NULLs indica inatividade).
+
+---
+
+
+
 
