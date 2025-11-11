@@ -33,6 +33,8 @@ Este repositório contém exercícios e estudos realizados em SQL, incluindo pr�
 
     - `chat_exercises` -> Exercícios feitos a partir de uma lista elaborada pelo ChatGPT;
 
+    - `amazon_test_solutions` -> Exercícios feitos a partir de um teste técnico da Amazon, que foi disponibilizado por um estudante no Linkedin e os prints se encontram na pasta `assets`;
+
     - `assets` -> Materiais complementares;
 
     - `summary_and_examples.md` -> Principais conceitos, comandos usados e exemplos.  
