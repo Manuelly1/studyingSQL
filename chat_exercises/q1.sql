@@ -3,7 +3,8 @@
 -- Neste caso, convém aplicar o INNER JOIN porque precisa do nome do produto (que está em produtos) e só quer os produtos que têm 
 -- transações (logo, que existam nas duas tabelas).
 
-SELECT t1.vlProduto, t2.DescNomeProduto
+SELECT t1.vlProduto, 
+    t2.DescNomeProduto
 
 FROM transacao_produto AS t1
 
