@@ -1,6 +1,6 @@
 -- Objetivo: Exibir o dia com maior engajamento de cada aluno que iniciou o curso no dia 01. O dia que cada aluno mais engajou desde que começou
 
--- A explicação da query vai ser encontrada no summary_and_examples.md
+-- A explicação desta query pode ser encontrada no arquivo summary_and_examples.md
 
 WITH alunos_dia_01 AS (
 

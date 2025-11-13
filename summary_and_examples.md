@@ -1100,3 +1100,176 @@ transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
 
 --- 
 
+## Window Functions
+
+- As **Window Functions** (ou *funções de janela*) permitem realizar cálculos sobre um conjunto de linhas relacionadas à linha atual, **sem agrupar os resultados** como ocorre com o `GROUP BY`;
+
+- Diferente do `GROUP BY`, que reduz os dados a um único resultado por grupo, as funções de janela criam uma **“janela” (ou partição)** dentro da qual o cálculo é aplicado, **mantendo o detalhamento de cada linha**.
+
+---
+
+### Sintaxe geral
+
+```sql
+    
+    função() OVER (PARTITION BY coluna ORDER BY coluna)
+
+```
+
+- `PARTITION BY`: define como os dados serão divididos em grupos (semelhante ao GROUP BY, mas sem colapsar as linhas). Cada grupo é tratado como uma partição independente;
+
+- `ORDER BY`: define a ordem dentro de cada partição, essencial para funções que dependem de sequência (como row_number, rank, lag etc);
+
+- **Exemplos:**
+
+    ```sql
+
+        ROW_NUMBER() OVER (PARTITION BY IdCliente ORDER BY Data)
+
+    ```
+
+    - O exemplo acima numera as linhas de cada cliente, reiniciando a contagem a cada novo `IdCliente`.
+
+    ```sql
+
+        RANK() OVER (ORDER BY Nota DESC)
+
+    ```
+
+    - O segundo exemplo atribui posições conforme a nota, pulando empates.
+
+    ```sql
+
+        SUM(Vendas) OVER (PARTITION BY Vendedor ORDER BY Data)
+
+    ```
+
+    - O último exemplo calcula o total acumulado de vendas ao longo do tempo, por vendedor.
+
+---
+
+### Benefícios
+
+- Mantém o nível de detalhe das linhas originais;
+
+- Permite cálculos de ranking, totais acumulados e comparações entre linhas;
+
+- Elimina a necessidade de subconsultas complexas;
+
+- É amplamente utilizada em análises de dados, relatórios e BI.
+
+---
+
+### Exemplo com Window Fuctions
+
+- **Objetivo:** Exibir o dia com maior engajamento de cada aluno que iniciou o curso no primeiro dia (no caso, 2025-08-25);
+
+```sql
+
+    WITH alunos_dia_01 AS (
+
+        SELECT DISTINCT IdCliente
+        FROM transacoes
+        WHERE substr(DtCriacao, 1, 10) = '2025-08-25'
+
+    ),
+
+    tb_dia_cliente AS (
+
+        SELECT t1.IdCliente,
+            substr(t2.DtCriacao, 1, 10) AS dtDia,
+            count(*) AS qtdeInteracoes
+
+        FROM alunos_dia_01 AS t1
+
+        LEFT JOIN transacoes AS t2
+            ON t1.IdCliente = t2.IdCliente
+            AND t2.DtCriacao >= '2025-08-25'
+            AND t2.DtCriacao < '2025-08-30'
+
+        GROUP BY t1.IdCliente,
+                substr(t2.DtCriacao, 1, 10)
+
+        ORDER BY t1.IdCliente, dtDia
+
+    ),
+
+    tb_row_number AS (
+
+        SELECT *,
+            row_number() OVER (PARTITION BY IdCliente ORDER BY qtdeInteracoes DESC, dtDia) AS rowNumber
+
+        FROM tb_dia_cliente
+
+    )
+
+    SELECT *
+
+    FROM tb_row_number
+
+    WHERE rowNumber = 1;
+
+```
+
+- **Explicações:**
+
+    - Primeiramente, criou-se a CTE (`alunos_dia_01`) para selecionar apenas os alunos que tiveram sua primeira transação (ou início do curso) no dia **25 de agosto de 2025**;
+    
+    - Nesta etapa, o resultado esperado é algo como:
+
+            | IdCliente | 
+            |-----------|
+            | 101       | 
+            | 102       | 
+            | 103       | 
+
+    - Em seguida, a CTE `tb_dia_cliente` une os alunos filtrados na primeira etapa com todas as suas transações dentro de um intervalo de datas.  
+      O resultado é uma tabela com a **quantidade de interações (`qtdeInteracoes`) por dia (`dtDia`) e por aluno (`IdCliente`)**;
+      
+    - Nesta parte, o resultado esperado é algo como:
+
+            | IdCliente  | dtDia      | qtdeInteracoes |
+            |------------|------------|----------------|
+            | 101        | 2025-08-25 | 22             |
+            | 101        | 2025-08-26 | 2              |
+            | 101        | 2025-08-27 | 3              |
+            | 102        | 2025-08-25 | 10             |
+            | 102        | 2025-08-26 | 5              |
+            | 103        | 2025-08-25 | 2              |
+            | 103        | 2025-08-28 | 15             |
+
+    - Na CTE `tb_row_number`, foi utilizada a **window function** `ROW_NUMBER()` para ordenar os dias de cada aluno conforme o nível de engajamento:
+
+        - `PARTITION BY IdCliente`: cria uma “janela” para cada aluno;  
+
+        - `ORDER BY qtdeInteracoes DESC, dtDia`: dentro de cada aluno, ordena do dia mais engajado para o menos engajado (em caso de empate, o dia mais antigo vem primeiro);  
+
+        - `ROW_NUMBER()`: numera as linhas dentro de cada aluno (1, 2, 3…).  
+
+    - O resultado é que o dia com maior engajamento de cada aluno recebe o número **1**;
+    
+    - Nesta etapa, a consulta retornará algo como:
+
+            | IdCliente  | dtDia      | qtdeInteracoes | rowNumber |
+            |------------|------------|----------------|-----------|
+            | 101        | 2025-08-25 | 22             | 1         |
+            | 101        | 2025-08-27 | 3              | 2         |
+            | 101        | 2025-08-26 | 2              | 3         |
+            | 102        | 2025-08-25 | 10             | 1         |
+            | 102        | 2025-08-26 | 5              | 2         |
+            | 103        | 2025-08-28 | 15             | 1         |
+            | 103        | 2025-08-25 | 2              | 2         |
+
+    - Por fim, o `WHERE` filtra para retornar apenas as linhas com `rowNumber = 1`, ou seja, o **dia em que cada aluno teve o maior número de interações**;
+    
+    - O resultado final será algo como:
+
+            | IdCliente  | dtDia      | qtdeInteracoes | rowNumber |
+            |------------|------------|----------------|-----------|
+            | 101        | 2025-08-25 | 22             | 1         |
+            | 102        | 2025-08-25 | 10             | 1         |
+            | 103        | 2025-08-28 | 15             | 1         |
+
+    - A função `ROW_NUMBER()` é essencial neste caso, pois permite **classificar registros dentro de um grupo (aluno)** sem precisar agrupar os dados ou perder o detalhamento de cada linha.
+
+---
