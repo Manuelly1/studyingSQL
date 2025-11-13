@@ -1177,8 +1177,8 @@ transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
     tb_dia_cliente AS (
 
         SELECT t1.IdCliente,
-            substr(t2.DtCriacao, 1, 10) AS dtDia,
-            count(*) AS qtdeInteracoes
+               substr(t2.DtCriacao, 1, 10) AS dtDia,
+               count(*) AS qtdeInteracoes
 
         FROM alunos_dia_01 AS t1
 
@@ -1188,7 +1188,7 @@ transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
             AND t2.DtCriacao < '2025-08-30'
 
         GROUP BY t1.IdCliente,
-                substr(t2.DtCriacao, 1, 10)
+                 substr(t2.DtCriacao, 1, 10)
 
         ORDER BY t1.IdCliente, dtDia
 
@@ -1273,3 +1273,188 @@ transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
     - A função `ROW_NUMBER()` é essencial neste caso, pois permite **classificar registros dentro de um grupo (aluno)** sem precisar agrupar os dados ou perder o detalhamento de cada linha.
 
 ---
+
+## Teste da Amazon 2025
+
+### Primeira Questão:
+
+- Objetivo: **"Find customers who purchased more than 3 times in the last month"***;
+
+```sql
+
+    SELECT IdCliente,
+           substr(DtCriacao, 1, 10) AS data,
+           COUNT(*) AS totalCompras
+
+    FROM transacoes
+
+    WHERE DtCriacao >= date('now', 'start of month', '-1 month')
+        AND DtCriacao < date('now', 'start of month')
+
+    GROUP BY IdCliente
+    HAVING COUNT(*) > 3;
+
+```
+
+- **Explicações:** 
+
+    - **Observação:** A ordem em que escrevemos uma query SQL é diferente da ordem lógica de execução. Internamente, o banco de dados executa mais ou menos nesta sequência:
+
+        1. FROM → lê a tabela;
+        
+        2. WHERE → filtra as linhas individuais (antes de qualquer agrupamento);
+
+        3. GROUP BY → agrupa as linhas que sobraram;
+
+        4. HAVING → filtra os grupos resultantes (já agregados);
+
+        5. SELECT → seleciona e calcula colunas (como COUNT(*));
+
+        6. ORDER BY / LIMIT, se houver.
+
+    - No caso da query apresentada, primeiramente a tabela `transacoes` é lida;
+
+    - Em seguida, ocorre a filtragem das transações do último mês (iniciando no mês anterior ao atual), utilizando a função `date` para tornar o processo dinâmico;
+
+    - Depois disso, os registros são agrupados por cliente (`IdCliente`), de modo que não haja repetições, uma vez que o `GROUP BY` agrupa todas as transações que têm o mesmo `IdCliente`;
+
+    - Na etapa seguinte, o `HAVING` é aplicado para filtrar apenas os grupos cuja contagem total de transações seja superior a 3;
+
+    - Por fim, o `SELECT` retorna as colunas desejadas: `IdCliente`, `data` (extraída via substr) e `totalCompras` (calculado com `COUNT(*)`). O `COUNT(*)` conta quantas linhas existem dentro de cada grupo que foi formado pelo `GROUP BY`.
+
+---
+
+### Segunda Questão:
+
+- Objetivo: **"Write a query to find the second highest salary"*** → foi adaptada para retornar o segundo cliente com a maior quantidade de pontos;
+
+```sql
+
+    SELECT IdCliente, 
+           QtdePontos
+
+    FROM clientes
+
+    WHERE QtdePontos < (
+
+        SELECT MAX(QtdePontos)
+        FROM clientes
+
+    )
+
+    ORDER BY QtdePontos DESC
+    LIMIT 1;
+
+```
+
+- **Explicações:**
+
+    - Primeiramente, a subconsulta localizada dentro do `WHERE` retorna o valor máximo de pontos existente na tabela, ou seja, o maior número de pontos entre todos os clientes;
+
+    - Em seguida, a condição no `WHERE` faz com que o SQL desconsidere o cliente que possui a maior quantidade de pontos, restando apenas os demais clientes com valores inferiores;
+
+    - Posteriormente, a cláusula `ORDER BY QtdePontos DESC` ordena os clientes restantes em ordem decrescente de pontos, e o `LIMIT 1` retorna apenas o primeiro registro, aquele que corresponde ao cliente com a **segunda maior quantidade de pontos**. 
+
+---
+
+### Terceira Questão:
+
+- Objetivo: **"What is the difference between RANK(), DENSE_RANK(), and ROW_NUMBER()?"**
+
+    - `RANK()`: atribui uma classificação a cada linha com base na ordenação definida, mas pula a numeração em caso de empate. Exemplo: se dois valores empatarem em 2º lugar, o próximo será 4º;
+
+    - `DENSE_RANK()`: atribui classificação considerando empates e não pula a numeração. Dessa forma, se dois valores empatarem em 1º lugar, o próximo será 2º;
+
+    - `ROW_NUMBER()`: atribui um número único e sequencial para cada linha. Não considera empates, cada linha recebe um número distinto. 
+
+    - Exemplo:
+
+        IdCliente | Pontos
+        ----------|--------
+        1         | 100
+        2         | 90
+        3         | 90
+        4         | 80
+
+    - Resultado ao aplicar cada função (`ORDER BY Pontos DESC`):
+
+        - `RANK()` → 1, 2, 2, 4;
+        
+        - `DENSE_RANK()` → 1, 2, 2, 3;
+
+        - `ROW_NUMBER()` → 1, 2, 3, 4.
+
+---
+
+### Quarta Questão:
+
+- Objetivo: **"Find duplicate records in a table"**;
+
+```sql
+
+    SELECT IdCliente, 
+           COUNT(*)
+
+    FROM clientes
+
+    GROUP BY IdCliente
+    HAVING COUNT(*) > 1;
+
+```
+
+- **Explicações:**
+
+    - Primeiramente, na tabela `clientes`, a cláusula `GROUP BY IdCliente` agrupa todas as linhas que possuem o mesmo identificador de cliente. Isso faz com que cada grupo represente um cliente distinto (ou um mesmo cliente repetido várias vezes);
+
+    - Em seguida, a função `COUNT(*)` é usada para contar quantas ocorrências existem de cada `IdCliente`. Assim, se um cliente aparece mais de uma vez na tabela, o `COUNT(*)` retornará um valor maior que 1;
+
+    - Logo após, a cláusula `HAVING COUNT(*) > 1` é aplicada sobre o resultado do agrupamento, filtrando apenas os grupos (clientes) que possuem mais de uma ocorrência, ou seja, os duplicados;
+
+    - Assim, o resultado final exibirá apenas os clientes repetidos, juntamente com a quantidade de vezes que cada um aparece na tabela.
+
+---
+
+### Quinta Questão:
+
+- Objetivo: **"What's the difference between WHERE and HAVING?**;
+
+    - Ambos são usados para filtrar dados, mas atuam em momentos diferentes da execução da consulta:
+
+    - `WHERE` filtra as linhas antes da agregação (ou seja, atua sobre os registros individuais);
+
+    - `HAVING` filtra os resultados depois da agregação (ou seja, atua sobre os grupos formados pelo `GROUP BY`).
+
+---
+
+### Sexta Questão:
+
+- Objetivo: **"Get the average order value for each customer"**;
+
+```sql
+
+    SELECT t2.IdCliente,
+           AVG(t1.QtdeProduto * t1.vlProduto) AS ValorMedio
+
+    FROM transacao_produto AS t1
+
+    INNER JOIN transacoes AS t2
+        ON t1.IdTransacao = t2.IdTransacao
+
+    GROUP BY t2.IdCliente;
+
+```
+
+- **Explicações:** 
+
+    - Primeiramente, a tabela `transacao_produto` (apelidada como `t1`) contém os produtos vinculados às transações e, dessa forma, as colunas `QtdeProduto` (quantidade) e `vlProduto` (valor unitário);
+
+    - Já a tabela `transacoes` (apelidada como `t2`) armazena as informações gerais das transações, incluindo o identificador do cliente (`IdCliente`);
+
+    - A junção `INNER JOIN` é utilizada para relacionar as duas tabelas por meio do campo `IdTransacao`. Isso garante que sejam combinados apenas os registros que possuem transações correspondentes em ambas as tabelas;
+
+    - Em seguida, a expressão `t1.QtdeProduto * t1.vlProduto` calcula o **valor total de cada item vendido** (quantidade × preço). A função de agregação `AVG()` é aplicada sobre esse resultado para obter a **média dos valores** das transações de cada cliente;
+
+    - Por fim, o `GROUP BY t2.IdCliente` agrupa as informações por cliente, garantindo que o cálculo da média (`AVG`) seja feito individualmente para cada um deles.
+
+---
+

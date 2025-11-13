@@ -14,7 +14,12 @@ SELECT IdCliente,
 
 FROM clientes
 
-WHERE QtdePontos < (SELECT MAX(QtdePontos) FROM clientes)
+WHERE QtdePontos < (
+
+       SELECT MAX(QtdePontos)
+       FROM clientes
+
+)
 
 ORDER BY QtdePontos DESC
 LIMIT 1;
