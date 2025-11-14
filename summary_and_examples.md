@@ -1160,7 +1160,9 @@ transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
 
 ---
 
-### Exemplo com Window Fuctions
+### Exemplos com Window Fuctions
+
+#### Exemplo 1
 
 - **Objetivo:** Exibir o dia com maior engajamento de cada aluno que iniciou o curso no primeiro dia (no caso, 2025-08-25);
 
@@ -1271,6 +1273,53 @@ transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
             | 103        | 2025-08-28 | 15             | 1         |
 
     - A função `ROW_NUMBER()` é essencial neste caso, pois permite **classificar registros dentro de um grupo (aluno)** sem precisar agrupar os dados ou perder o detalhamento de cada linha.
+
+---
+
+#### Exemplo 2
+
+- **Objetivo:** Obter a quantidade de transações por dia de curso e calcular a evolução diária por meio de uma soma acumulada;
+
+```sql
+
+    WITH tb_sumario_dias AS (
+
+        SELECT substr(DtCriacao, 1, 10) AS dtDia,
+            count(DISTINCT IdTransacao) AS qtdeTransacao
+
+        FROM transacoes
+
+        WHERE DtCriacao >= '2025-08-25'
+            AND DtCriacao < '2025-08-30'
+
+        GROUP BY dtDia
+
+    )
+
+    SELECT *,
+        sum(qtdeTransacao) OVER (ORDER BY dtDia) AS qtdeTransacaoAcumulada
+
+    FROM tb_sumario_dias;
+
+```
+
+- **Explicações:**
+
+    - A CTE `tb_sumario_dias` agrupa as transações por dia do curso, contando quantas transações únicas (`count(DISTINCT IdTransacao)`) ocorreram em cada data dentro do intervalo especificado (período do curso);
+
+    - A coluna `qtdeTransacaoAcumulada` utiliza a função de janela:
+
+    ```sql
+
+        sum(qtdeTransacao) OVER (ORDER BY dtDia)
+
+    ```
+
+    - Que calcula uma **soma acumulada**. Diferente de um `GROUP BY`, que resumiria os dados e retornaria apenas linhas agregadas, a cláusula `OVER` permite aplicar a função `SUM` **sem perder as linhas originais**, calculando um valor adicional para cada linha;
+
+    - O `ORDER BY dtDia` dentro do `OVER` define a ordem cronológica em que os valores serão acumulados, fazendo com que o SQL some todos os valores de `qtdeTransacao` desde o primeiro dia até o último dia representado pela linha;
+
+    - Essa lógica é possível porque o `OVER` transforma a função `SUM` em uma **função de janela**, que opera “por cima” do conjunto de resultados já agrupados, criando métricas como acumulados, médias móveis, rankings e outros cálculos linha a linha sem alterar o número de linhas da consulta.
 
 ---
 
