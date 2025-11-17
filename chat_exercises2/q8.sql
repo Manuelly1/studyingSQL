@@ -8,6 +8,6 @@ FROM transacao_produto
 
 GROUP BY IdProduto
 
-ORDER BY count(IdProduto) DESC
+ORDER BY totalVendido DESC
 
 LIMIT 5;

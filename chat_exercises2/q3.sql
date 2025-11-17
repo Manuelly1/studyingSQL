@@ -1,4 +1,4 @@
--- Objetivo: Listar o nome dos clientes que já fizeram pelo menos 1 transação
+-- Objetivo: Listar o nome (substituí por ID, pois não tem o nome) dos clientes que já fizeram pelo menos 1 transação
 
 SELECT DISTINCT t1.IdCliente
 
