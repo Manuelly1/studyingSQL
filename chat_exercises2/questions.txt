@@ -27,14 +27,12 @@ Questões - CHAT
 
 13- Mostre os clientes que compraram mais de 3 vezes.
 
-14- Consultas completas e raciocínio.
+14- Calcule o ticket médio (valor médio por transação).
 
-15- Calcule o ticket médio (valor médio por transação).
+15- Mostre o cliente que mais gastou no total.
 
-16- Mostre o cliente que mais gastou no total.
+16- Liste os produtos mais lucrativos (maior soma de valor vendido).
 
-17- Liste os produtos mais lucrativos (maior soma de valor vendido).
+17- Liste, mês a mês, o total de vendas do ano corrente.
 
-18- Liste, mês a mês, o total de vendas do ano corrente.
-
-19- Encontre o cliente que comprou mais itens no total (não valor, mas quantidade).
+18- Encontre o cliente que comprou mais itens no total (não valor, mas quantidade).

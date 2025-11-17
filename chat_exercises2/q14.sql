@@ -1,0 +1,1 @@
+-- Objetivo: Calcular o ticket médio (valor médio por transação)
