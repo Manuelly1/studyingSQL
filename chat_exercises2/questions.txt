@@ -1,0 +1,40 @@
+Questões - CHAT
+
+
+1- Mostre todos os produtos com preço maior que 100.
+
+2- Mostre todas as transações ocorridas em 2024 (usando DtCriacao).
+
+3- Liste o nome dos clientes que já fizeram pelo menos 1 transação.
+
+4- Mostre os produtos comprados na transação de ID X (Troque X por uma transação real sua).
+
+5- Conte quantos produtos existem cadastrados no total.
+
+6- Mostre o total de itens vendidos por cada produto.
+
+7- Mostre o total gasto por cada cliente.
+
+8- Liste os 5 produtos mais vendidos em quantidade.
+
+9- Mostre todas as transações com valor total acima de R$ 500.
+
+10- Mostre o número de transações feitas por cada cliente.
+
+11- Para cada transação, mostre: ID da transação, Cliente, Data e Valor total da compra.
+
+12- Mostre quais produtos nunca foram vendidos.
+
+13- Mostre os clientes que compraram mais de 3 vezes.
+
+14- Consultas completas e raciocínio.
+
+15- Calcule o ticket médio (valor médio por transação).
+
+16- Mostre o cliente que mais gastou no total.
+
+17- Liste os produtos mais lucrativos (maior soma de valor vendido).
+
+18- Liste, mês a mês, o total de vendas do ano corrente.
+
+19- Encontre o cliente que comprou mais itens no total (não valor, mas quantidade).
