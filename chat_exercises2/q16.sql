@@ -1,5 +1,8 @@
 -- Objetivo: Listar os produtos mais lucrativos (maior soma de valor vendido)
 
+-- Multiplica QtdeProduto * vlProduto para calcular quanto cada venda rendeu, soma esse valor para cada produto usando SUM();
+-- Agrupa por IdProduto para garantir que o total será por produto.
+
 SELECT 
     t1.DescNomeProduto,
     SUM(t2.QtdeProduto * t2.vlProduto) AS totalVendido
