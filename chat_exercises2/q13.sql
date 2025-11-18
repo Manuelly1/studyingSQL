@@ -1,6 +1,5 @@
 -- Objetivo: Mostrar os clientes que compraram mais de 3 vezes
 
--- Explicações:
 -- LEFT JOIN → garante que todos os clientes apareçam (mesmo quem nunca comprou);
 -- COUNT(t2.IdTransacao) → conta quantas compras o cliente fez;
 -- GROUP BY → agrupa por cliente;
