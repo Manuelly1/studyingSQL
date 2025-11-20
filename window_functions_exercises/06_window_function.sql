@@ -1,19 +1,40 @@
 /* 
 
-Objetivo: exibir, para cada usuário, qual é o dia da semana em que ele realizou a maior quantidade de transações
+Objetivo: exibir o saldo de pontos acumulado ao longo do tempo para cada usuário, considerando todas as transações registradas
 
 Descrição da Query:
-    1. No CTE "tb_cliente_semana": extrai o dia da semana (%w retorna: 0 = domingo, 1 = segunda...), agrupa as transações por IdCliente e dia da 
-    semana e conta quantas transações distintas cada cliente realizou em cada dia da semana;
+    1. No CTE "tb_cliente_dia": agrupa as transações por IdCliente e por dia e calcula: 
+        totalPontos: soma diária de QtdePontos (podendo incluir pontos positivos e negativos), que representa a variação diária no saldo do cliente; e
+        pontosPositivos: soma apenas os pontos positivos do dia. Transações negativas são tratadas como 0, pois não contam como ganho;
 
-    2. No CTE "tb_rn": aplica ROW_NUMBER() com PARTITION BY IdCliente para numerar os dias da semana de cada cliente, em ordem decrescente de 
-    atividade. Assim, o dia mais ativo de cada cliente recebe rn = 1;
+    2. Na consulta final: 
+        saldoPontos: usa SUM(totalPontos) OVER (PARTITION BY IdCliente ORDER BY dtDia) para construir o saldo acumulado de pontos ao longo do tempo 
+        para cada cliente. Ou seja, soma o saldo diário progressivamente;
+        totalPontosPositivos: usa SUM(pontosPositivos) OVER (PARTITION BY IdCliente ORDER BY dtDia) para somar somente os pontos positivos acumulados 
+        ao longo do tempo, permitindo analisar quanto o usuário ganhou, independentemente de perdas.
 
-    3. Na query final: seleciona apenas as linhas com rn = 1, retornando para cada cliente o seu dia da semana mais movimentado.
-
-Explicação da função de janela:
-    - PARTITION BY IdCliente cria uma "janela" separada para cada cliente;
-    - ORDER BY qtdeTransacao DESC ordena os dias da semana do mais ativo para o menos ativo;
-    - ROW_NUMBER() atribui um número sequencial dentro de cada janela, permitindo identificar o topo (mais ativo).
+Explicação das funções de janela:
+    - PARTITION BY IdCliente separa o cálculo para cada cliente individualmente;
+    - ORDER BY dtDia garante a ordem cronológica do acumulado;
+    - SUM(...) OVER cria um acumulado progressivo, linha a linha, sem perder o detalhe diário.
 
 */
+
+WITH tb_cliente_dia AS (
+
+    SELECT IdCliente,
+           substr(DtCriacao, 1, 10) AS dtDia,
+           sum(QtdePontos) AS totalPontos,
+           sum(CASE WHEN QtdePontos > 0 THEN QtdePontos ELSE 0 END) AS pontosPositivos
+
+    FROM transacoes
+
+    GROUP BY IdCliente, dtDia
+
+)
+
+SELECT *,
+       sum(totalPontos) OVER (PARTITION BY IdCliente ORDER BY dtDia) AS saldoPontos,
+       sum(pontosPositivos) OVER (PARTITION BY IdCliente ORDER BY dtDia) AS totalPontosPositivos
+
+FROM tb_cliente_dia;
