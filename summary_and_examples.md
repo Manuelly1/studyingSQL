@@ -1116,9 +1116,11 @@ transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
 
 ```
 
+- `OVER`:  essa cláusula transforma funções agregadoras (como SUM, COUNT, AVG) em funções de janela. Isso significa que, ao invés de agregar todas as linhas em uma única saída, a função opera “por cima” de uma janela de linhas, mantendo cada linha original. Por exemplo, no caso: **SUM(qtdeTransacao) OVER (ORDER BY dtDia)** cria um acumulado: ele soma os valores dia após dia na ordem cronológica;
+
 - `PARTITION BY`: define como os dados serão divididos em grupos (semelhante ao GROUP BY, mas sem colapsar as linhas). Cada grupo é tratado como uma partição independente;
 
-- `ORDER BY`: define a ordem dentro de cada partição, essencial para funções que dependem de sequência (como row_number, rank, lag etc);
+- `ORDER BY`: define a ordem dentro de cada partição, essencial para funções que dependem de sequência (como row_number, rank, lag etc).
 
 - **Exemplos:**
 
