@@ -14,7 +14,6 @@ O que a janela faz:
 
 */
 
-
 WITH tb_diario AS (
 
     SELECT 
