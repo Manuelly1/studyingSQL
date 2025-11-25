@@ -13,6 +13,7 @@ WHERE t1.id_cliente IN (
 
 );
 
+
 SELECT t1.nome
 
 FROM clientes1 AS t1
@@ -24,6 +25,7 @@ WHERE EXISTS (
     WHERE t1.id_cliente = t2.id_cliente
 
 ); 
+
 
 SELECT DISTINCT t1.nome
 

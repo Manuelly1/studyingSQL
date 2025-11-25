@@ -10,7 +10,6 @@ FROM produtos1
 WHERE preco > (
 
     SELECT avg(preco)
-
     FROM produtos1
 
 );

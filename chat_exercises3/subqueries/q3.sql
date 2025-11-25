@@ -14,6 +14,7 @@ WHERE NOT EXISTS (
 
 );
 
+
 SELECT nome
 
 FROM clientes1
@@ -24,6 +25,7 @@ WHERE id_cliente NOT IN (
     FROM pedidos1
 
 );
+
 
 SELECT t1.nome,
        t2.id_pedido
