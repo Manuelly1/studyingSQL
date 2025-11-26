@@ -11,7 +11,7 @@ tabela pedidos1 para identificar qual id_pedido possui exatamente esse valor_tot
     - pedidos1.valor_total  → valor real de cada pedido;
     - tb_maior_valor.maiorValor → maior valor encontrado
 
-Assim, conseguimos recuperar o pedido correspondente ao maior valor total.
+Assim, conseguimos recuperar o pedido correspondente ao maior valor total. Demonstrei 2 formas de resolver esse problema usando CTEs
 
 */
 
@@ -36,4 +36,20 @@ SELECT t1.id_pedido,
 FROM tb_pedidos_valores AS t1
 
 INNER JOIN tb_maior_valor t2
+    ON t1.valor_total = t2.maiorValor;
+
+
+-- Outra forma:
+WITH tb_maior_valor AS (
+
+    SELECT max(valor_total) AS maiorValor
+    FROM pedidos1
+)
+
+SELECT t1.id_pedido,
+       t1.valor_total 
+
+FROM pedidos1 AS t1
+
+JOIN tb_maior_valor AS t2
     ON t1.valor_total = t2.maiorValor;
