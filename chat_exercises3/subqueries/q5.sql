@@ -13,7 +13,7 @@ WHERE id_cliente = (
 
     WHERE id_pedido = (
 
-        SELECT MAX(id_pedido)
+        SELECT max(id_pedido)
         FROM pedidos1
 
     )

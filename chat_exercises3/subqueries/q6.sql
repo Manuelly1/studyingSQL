@@ -12,11 +12,11 @@ GROUP BY t1.id_produto, t1.nome_produto
 
 HAVING sum(t2.quantidade) > (
 
-    SELECT AVG(totalPorProduto)
+    SELECT avg(totalPorProduto)
 
         FROM (
 
-            SELECT SUM(quantidade) AS totalPorProduto
+            SELECT sum(quantidade) AS totalPorProduto
             FROM itens_pedido1
             GROUP BY id_produto
 
