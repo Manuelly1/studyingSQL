@@ -16,7 +16,7 @@ Subquery externa que calcula a média
     para filtrar clientes que gastaram acima da média.
 
 Query principal (agregação por cliente + filtro HAVING)
-    - O que faz passo-a-passo:
+    - O que faz:
         a) JOIN: relaciona pedidos com clientes para permitir mostrar o nome (ou outras colunas do cliente);
         b) GROUP BY: agrupa linhas por cliente para calcular o total de cada cliente;
         c) SUM(t1.valor_total): soma os `valor_total` dentro de cada grupo (cada cliente) — esse é o `totalGasto`;
