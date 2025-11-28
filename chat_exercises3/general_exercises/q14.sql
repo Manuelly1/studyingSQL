@@ -5,5 +5,7 @@ SELECT t1.nome,
 
 FROM clientes1 AS t1
 
-LEFT JOIN pedidos1 AS t2
-    ON t1.id_cliente = t2.id_cliente;
+INNER JOIN pedidos1 AS t2
+    ON t1.id_cliente = t2.id_cliente
+
+GROUP BY t1.nome;

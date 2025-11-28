@@ -1,8 +1,7 @@
 -- Qual o valor total comprado por cada cliente?
 
-SELECT 
-      t1.nome,
-      sum(t2.valor_total) AS valorTotal
+SELECT t1.nome,
+       sum(t2.valor_total) AS valorTotal
 
 FROM clientes1 AS t1
 

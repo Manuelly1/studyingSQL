@@ -4,7 +4,7 @@
 
 SELECT t1.nome_produto,
        t2.id_pedido,
-       SUM(t2.quantidade) AS qtVendida
+       sum(t2.quantidade) AS qtVendida
 
 FROM produtos1 AS t1
 

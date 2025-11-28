@@ -1,9 +1,8 @@
 -- Para cada cliente, mostre: quantidade de pedidos realizados e valor total gasto
 
-SELECT 
-    t1.nome,
-    count(DISTINCT t2.id_pedido) AS qtdePedidos,
-    sum(t2.valor_total) AS valorGasto
+SELECT t1.nome,
+       count(DISTINCT t2.id_pedido) AS qtdePedidos,
+       sum(t2.valor_total) AS valorGasto
 
 FROM clientes1 AS t1
 

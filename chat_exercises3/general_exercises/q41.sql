@@ -7,15 +7,15 @@ SELECT t1.nome,
 
 FROM clientes1 AS t1
 
-LEFT JOIN pedidos1 AS t2
+INNER JOIN pedidos1 AS t2
     ON t1.id_cliente = t2.id_cliente
 
-LEFT JOIN itens_pedido1 AS t3
+INNER JOIN itens_pedido1 AS t3
     ON t2.id_pedido = t3.id_pedido
 
-LEFT JOIN produtos1 AS t4
+INNER JOIN produtos1 AS t4
     ON t3.id_produto = t4.id_produto
 
-GROUP BY t1.nome
+GROUP BY t1.id_cliente, t1.nome
 
 ORDER BY valorGasto DESC;

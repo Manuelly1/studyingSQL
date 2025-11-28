@@ -12,7 +12,7 @@ CREATE TABLE clientes1 (
     cidade VARCHAR(100),
     idade INTEGER
 );
-
+'
 CREATE TABLE produtos1 (
     id_produto INTEGER PRIMARY KEY,
     nome_produto VARCHAR(100),
