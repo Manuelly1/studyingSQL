@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS itens_pedido1;
 DROP TABLE IF EXISTS pedidos1;
 DROP TABLE IF EXISTS produtos1;
 DROP TABLE IF EXISTS clientes1;
+DROP TABLE IF EXISTS vendas1;
 
 CREATE TABLE clientes1 (
     id_cliente INTEGER PRIMARY KEY,
@@ -12,7 +13,7 @@ CREATE TABLE clientes1 (
     cidade VARCHAR(100),
     idade INTEGER
 );
-'
+
 CREATE TABLE produtos1 (
     id_produto INTEGER PRIMARY KEY,
     nome_produto VARCHAR(100),
@@ -35,6 +36,20 @@ CREATE TABLE itens_pedido1 (
     FOREIGN KEY (id_pedido) REFERENCES pedidos1(id_pedido),
     FOREIGN KEY (id_produto) REFERENCES produtos1(id_produto)
 );
+
+CREATE TABLE vendas1 (
+    id_venda INTEGER PRIMARY KEY,
+    produto VARCHAR(100),
+    quantidade INTEGER,
+    valor_total DECIMAL(10,2),
+    data_venda DATE
+);
+
+INSERT INTO vendas1 VALUES
+(1, 'Café', 2, 20.00, '2024-10-01'),
+(2, 'Torta', 1, 15.00, '2024-10-02'),
+(3, 'Café', 3, 30.00, '2024-10-02'),
+(4, 'Suco', 2, 18.00, '2024-10-03');
 
 -- Inserção dos dados
 
