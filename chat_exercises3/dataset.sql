@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS pedidos1;
 DROP TABLE IF EXISTS produtos1;
 DROP TABLE IF EXISTS clientes1;
 DROP TABLE IF EXISTS vendas1;
+DROP TABLE IF EXISTS funcionarios1;
 
 CREATE TABLE clientes1 (
     id_cliente INTEGER PRIMARY KEY,
@@ -37,23 +38,11 @@ CREATE TABLE itens_pedido1 (
     FOREIGN KEY (id_produto) REFERENCES produtos1(id_produto)
 );
 
--- FUNCIONARIOS
-DROP TABLE IF EXISTS funcionarios1;
-
 CREATE TABLE funcionarios1 (
     id INTEGER PRIMARY KEY,
     nome VARCHAR(100),
     salario DECIMAL(10,2)
 );
-
-INSERT INTO funcionarios1 VALUES
-(1, 'Alice', 5000.00),
-(2, 'Bruno', 7200.00),
-(3, 'Carla', 7200.00),  -- empate no maior salário
-(4, 'Diego', 4500.00),
-(5, 'Eduarda', 3100.00),
-(6, 'Fernando', 6800.00),
-(7, 'Gabriela', 2500.00);
 
 CREATE TABLE vendas1 (
     id_venda INTEGER PRIMARY KEY,
@@ -62,12 +51,6 @@ CREATE TABLE vendas1 (
     valor_total DECIMAL(10,2),
     data_venda DATE
 );
-
-INSERT INTO vendas1 VALUES
-(1, 'Café', 2, 20.00, '2024-10-01'),
-(2, 'Torta', 1, 15.00, '2024-10-02'),
-(3, 'Café', 3, 30.00, '2024-10-02'),
-(4, 'Suco', 2, 18.00, '2024-10-03');
 
 -- Inserção dos dados
 
@@ -103,3 +86,19 @@ INSERT INTO itens_pedido1 VALUES
 (4, 3, 1),  -- Cadeira Gamer
 (4, 5, 1);  -- Teclado
 
+-- VENDAS
+INSERT INTO vendas1 VALUES
+(1, 'Café', 2, 20.00, '2024-10-01'),
+(2, 'Torta', 1, 15.00, '2024-10-02'),
+(3, 'Café', 3, 30.00, '2024-10-02'),
+(4, 'Suco', 2, 18.00, '2024-10-03');
+
+-- FUNCIONÁRIOS
+INSERT INTO funcionarios1 VALUES
+(1, 'Alice', 5000.00),
+(2, 'Bruno', 7200.00),
+(3, 'Carla', 7200.00), 
+(4, 'Diego', 4500.00),
+(5, 'Eduarda', 3100.00),
+(6, 'Fernando', 6800.00),
+(7, 'Gabriela', 2500.00);
