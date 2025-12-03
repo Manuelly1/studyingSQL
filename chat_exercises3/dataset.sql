@@ -37,6 +37,24 @@ CREATE TABLE itens_pedido1 (
     FOREIGN KEY (id_produto) REFERENCES produtos1(id_produto)
 );
 
+-- FUNCIONARIOS
+DROP TABLE IF EXISTS funcionarios1;
+
+CREATE TABLE funcionarios1 (
+    id INTEGER PRIMARY KEY,
+    nome VARCHAR(100),
+    salario DECIMAL(10,2)
+);
+
+INSERT INTO funcionarios1 VALUES
+(1, 'Alice', 5000.00),
+(2, 'Bruno', 7200.00),
+(3, 'Carla', 7200.00),  -- empate no maior salário
+(4, 'Diego', 4500.00),
+(5, 'Eduarda', 3100.00),
+(6, 'Fernando', 6800.00),
+(7, 'Gabriela', 2500.00);
+
 CREATE TABLE vendas1 (
     id_venda INTEGER PRIMARY KEY,
     produto VARCHAR(100),
