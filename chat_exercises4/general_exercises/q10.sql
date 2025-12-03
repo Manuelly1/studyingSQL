@@ -25,7 +25,7 @@ WHERE t4.preco = (
 
     FROM pedidosE AS t5
 
-    JOIN itens_pedidoE AS t6 
+    INNER JOIN itens_pedidoE AS t6 
         ON t5.id_pedido = t6.id_pedido
 
     INNER JOIN produtosE AS t7
