@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS itens_pedidoE;
 DROP TABLE IF EXISTS pedidosE;
 DROP TABLE IF EXISTS produtosE;
 DROP TABLE IF EXISTS clientesE;
+DROP TABLE IF EXISTS vendasE;
 
 CREATE TABLE clientesE (
     id_cliente INT PRIMARY KEY,
@@ -33,9 +34,14 @@ CREATE TABLE itens_pedidoE (
     FOREIGN KEY (id_produto) REFERENCES produtosE(id_produto)
 );
 
-/* ===========================
-   TABELA: clientes
-   =========================== */
+CREATE TABLE vendasE (
+    id_venda INTEGER PRIMARY KEY,
+    produto VARCHAR(100),
+    quantidade INTEGER,
+    valor_total DECIMAL(10,2),
+    data_venda DATE
+);
+
 INSERT INTO clientesE (id_cliente, nome, email, cidade) VALUES
 (1, 'Lara Farias', 'lara@gmail.com', 'Natal'),
 (2, 'João Medeiros', 'joaom@gmail.com', 'Currais Novos'),
@@ -67,3 +73,9 @@ INSERT INTO itens_pedidoE (id_pedido, id_produto, quantidade) VALUES
 (104, 1, 1),
 (104, 3, 1),
 (105, 4, 1);
+
+INSERT INTO vendasE VALUES
+(1, 'Café', 2, 20.00, '2024-10-01'),
+(2, 'Torta', 1, 15.00, '2024-10-02'),
+(3, 'Refrigerante', 3, 25.00, '2024-10-02'),
+(4, 'Suco', 2, 18.00, '2024-10-03');
