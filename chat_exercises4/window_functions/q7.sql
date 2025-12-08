@@ -6,7 +6,7 @@
 
 SELECT t1.nome_produto AS produto,
        sum(t2.quantidade * t1.preco) AS vendasTotais,
-       RANK() OVER (ORDER BY sum(t2.quantidade * t1.preco) DESC) AS ranking
+       DENSE_RANK() OVER (ORDER BY SUM(t2.quantidade * t1.preco) DESC) AS ranking
 
 FROM produtosE AS t1
 
