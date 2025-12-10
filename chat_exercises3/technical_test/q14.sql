@@ -1,7 +1,7 @@
 /*
 
-- Objetivo: Considere as tabelas: clientes e pedidos. Liste: nome do cliente, total gasto (soma dos pedidos) e 
-quantidade de pedidos. Apenas para clientes que gastaram acima de 1000
+- Objetivo: Considere as tabelas: clientes e pedidos. Liste: nome do cliente, total gasto (soma dos pedidos) e quantidade de pedidos. 
+Apenas para clientes que gastaram acima de 1000
 
 */
 
