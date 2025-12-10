@@ -1,4 +1,15 @@
-# Pontos Importantes das Aulas e Exercícios de SQL
+Considere as tabelas:
+
+- `clientes(id, nome, cidade)`
+- `pedidos(id, id_cliente, valor_total)`
+
+Liste:
+
+- nome do cliente
+- total gasto (soma dos pedidos)
+- quantidade de pedidos
+
+Apenas para clientes que gastaram **acima de 1000**.# Pontos Importantes das Aulas e Exercícios de SQL
 
 - **O que é um banco de dados?** É um repositório organizado que armazena e gerencia conjuntos de informações estruturadas em tabelas, representando elementos do mundo real. Uma coleção de entidades;
 
@@ -1102,9 +1113,53 @@ transações) no curso de SQL ocorrido entre 25 e 29 de agosto/2025;
 
 ## Window Functions
 
+## Window Functions
+
 - As **Window Functions** (ou *funções de janela*) permitem realizar cálculos sobre um conjunto de linhas relacionadas à linha atual, **sem agrupar os resultados** como ocorre com o `GROUP BY`;
 
 - Diferente do `GROUP BY`, que reduz os dados a um único resultado por grupo, as funções de janela criam uma **“janela” (ou partição)** dentro da qual o cálculo é aplicado, **mantendo o detalhamento de cada linha**.
+
+---
+
+### Tipos de Window Functions
+
+Existem 3 categorias principais:
+
+1. **Funções de Classificação (Ranking Functions)**
+
+    Ordenam ou numeram linhas dentro de uma partição.
+
+    - `ROW_NUMBER()` → numera as linhas sem empates;
+
+    - `RANK()` → atribui posição, mas empates fazem pular números;
+
+    - `DENSE_RANK()` → atribui posição sem pular números em empate;
+
+    - `NTILE(n)` → divide as linhas em quantis (quartis, decis, etc).
+
+2. **Funções de Agregação (Aggregate Window Functions)**
+
+    São agregações (SUM, AVG, MAX, MIN etc.) aplicadas sobre uma janela, **sem colapsar linhas**.
+
+    - `SUM() OVER ()`
+
+    - `AVG() OVER ()`
+
+    - `MAX() OVER ()`
+
+    - `COUNT() OVER ()`
+
+3. **Funções de Navegação (Navigation / Analytic Functions)**
+
+    Comparam valores entre linhas.
+
+    - `LAG()` → pega valor da linha anterior;
+
+    - `LEAD()` → pega valor da próxima linha;
+
+    - `FIRST_VALUE()` → primeiro valor da janela;
+
+    - `LAST_VALUE()` → último valor da janela. 
 
 ---
 
