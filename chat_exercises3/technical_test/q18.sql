@@ -2,6 +2,8 @@
 
 - Objetivo: Para cada categoria de produto, mostrar: faturamento total e o produto mais vendido em faturamento dentro da categoria. 
 Não usar `ORDER BY + LIMIT`
+
+Demonstrei duas abordagens: uma utilizando subconsulta no `HAVING` e outra utilizando `WINDOW FUNCTION` com `DENSE_RANK()`
     
 */ 
 
@@ -36,3 +38,35 @@ HAVING sum(t2.quantidade * t1.preco) = (
 
     WHERE sub.categoria = t1.categoria
 );
+
+
+
+
+WITH faturamento_produto AS (
+
+    SELECT p.categoria,
+           p.nome_produto,
+           sum(i.quantidade * p.preco) AS faturamentoProduto,
+           DENSE_RANK() OVER (
+
+                PARTITION BY p.categoria
+                ORDER BY sum(i.quantidade * p.preco) DESC
+
+        ) AS rankingCategoria
+
+    FROM produtos1 AS p
+
+    INNER JOIN itens_pedido1 AS i
+        ON p.id_produto = i.id_produto
+
+    GROUP BY p.categoria, p.nome_produto
+
+)
+
+SELECT categoria,
+       nome_produto AS produtoMaisVendido,
+       faturamentoProduto
+
+FROM faturamento_produto
+
+WHERE rankingCategoria = 1;
