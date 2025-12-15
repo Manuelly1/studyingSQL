@@ -2,8 +2,6 @@
 
 - Objetivo: Listar o nome do curso, a quantidade de alunos e o ranking dos cursos por número de matrículas (sem pular posições)
 
-DENSE_RANK
-
 */ 
 
 SELECT nome_curso,
@@ -21,6 +19,6 @@ FROM (
         ON c.id_curso = m.id_curso
 
     GROUP BY c.id_curso, c.nome_curso
-    
+
 ) sub;
 
