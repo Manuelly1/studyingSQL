@@ -30,6 +30,8 @@ HAVING sum(t2.valor_total) > (
             ON t3.id_cliente = t4.id_cliente
 
         GROUP BY t3.id_cliente
-        
+
     ) sub
 );
+
+

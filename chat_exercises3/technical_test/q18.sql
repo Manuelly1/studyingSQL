@@ -70,3 +70,4 @@ SELECT categoria,
 FROM faturamento_produto
 
 WHERE rankingCategoria = 1;
+
