@@ -16,6 +16,7 @@ WHERE m.id_aluno IS NULL;
 -- outra forma:
 
 SELECT a.nome
+
 FROM alunos AS a
 
 WHERE NOT EXISTS (
