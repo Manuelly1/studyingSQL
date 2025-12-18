@@ -17,3 +17,4 @@ INNER JOIN cursos AS c
     ON m.id_curso = c.id_curso
     
 GROUP BY a.id_aluno, a.nome;
+
