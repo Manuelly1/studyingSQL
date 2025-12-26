@@ -19,3 +19,22 @@ WHERE c.preco = (
     WHERE c2.categoria = c.categoria
 
 );
+
+
+-- outra forma:
+SELECT categoria, 
+       nome_curso, 
+       preco
+
+FROM (
+
+    SELECT categoria,
+           nome_curso,
+           preco,
+           RANK() OVER (PARTITION BY categoria ORDER BY preco DESC) AS rk
+
+    FROM cursos
+
+) t
+
+WHERE rk = 1;
