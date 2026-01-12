@@ -5,7 +5,7 @@
 */  
 
 SELECT a.nome,
-       c.nome_curso
+       GROUP_CONCAT(c.nome_curso, ', ') AS nomeCurso
 
 FROM alunos AS a
 
@@ -13,5 +13,7 @@ INNER JOIN matriculas AS m
     ON a.id_aluno = m.id_aluno
 
 INNER JOIN cursos AS c
-    ON m.id_curso = c.id_curso;
- 
+    ON m.id_curso = c.id_curso
+
+GROUP BY a.id_aluno, a.nome;
+
