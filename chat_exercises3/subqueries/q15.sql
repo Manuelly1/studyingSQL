@@ -1,18 +1,31 @@
 /*
 
-- Objetivo: Listar os pedidos cujo valor total é maior que a média dos pedidos
+- Objetivo: Encontrar o produto mais vendido usando subquery (não usar ORDER BY + LIMIT)
 
 */
 
-SELECT id_pedido, 
-       valor_total
+SELECT t1.nome_produto,
+       sum(t2.quantidade) qtdeItens
 
-FROM pedidos1
+FROM produtos1 AS t1
 
-WHERE valor_total > (
+INNER JOIN itens_pedido1 AS t2
+    ON t1.id_produto = t2.id_produto
 
-    SELECT avg(valor_total)
+GROUP BY t1.id_produto, t1.nome_produto
 
-    FROM pedidos1
+HAVING sum(t2.quantidade) = (
+
+    SELECT max(totalporProduto)
+
+    FROM (
+
+        SELECT sum(quantidade) AS totalporProduto
+
+        FROM itens_pedido1
+
+        GROUP BY id_produto
+
+    ) AS t
 
 );

@@ -1,34 +1,51 @@
 /*
 
-- Objetivo: Exibir os produtos cujo faturamento é maior que o faturamento médio de todos os produtos
+- Objetivo: Mostrar o cliente que comprou o produto mais caro
 
 */
 
-SELECT t1.nome_produto,
-       sum(t1.preco * t2.quantidade) AS faturamento
+-- sem subquery:
 
-FROM produtos1 AS t1
+SELECT t1.nome,
+       t4.nome_produto,
+       t4.preco AS produtoMaisCaro
 
-INNER JOIN itens_pedido1 AS t2
-    ON t1.id_produto = t2.id_produto
+FROM clientes1 AS t1
 
-GROUP BY t1.id_produto, t1.nome_produto
+INNER JOIN pedidos1 AS t2
+    ON t1.id_cliente = t2.id_cliente
 
-HAVING sum(t1.preco * t2.quantidade) > (
-    
-    SELECT avg(faturamentoProd)
+INNER JOIN itens_pedido1 AS t3
+    ON t2.id_pedido = t3.id_pedido
 
-    FROM (
+INNER JOIN produtos1 AS t4
+    ON t3.id_produto = t4.id_produto
 
-        SELECT sum(t3.preco * t4.quantidade) AS faturamentoProd
+ORDER BY produtoMaisCaro DESC
 
-        FROM produtos1 AS t3
+LIMIT 1;
 
-        INNER JOIN itens_pedido1 AS t4
-            ON t3.id_produto = t4.id_produto
+-- com subquery:
 
-        GROUP BY t3.id_produto
+SELECT t1.nome, 
+       t4.nome_produto,
+       t4.preco
 
-    ) AS t
+FROM clientes1 AS t1
+
+INNER JOIN pedidos1 AS t2
+    ON t1.id_cliente = t2.id_cliente
+
+INNER JOIN itens_pedido1 AS t3
+    ON t2.id_pedido = t3.id_pedido
+
+INNER JOIN produtos1 AS t4
+    ON t3.id_produto = t4.id_produto
+
+WHERE t4.preco = (
+
+    SELECT max(preco)
+    FROM produtos1
 
 );
+
